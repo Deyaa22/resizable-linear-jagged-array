@@ -124,4 +124,9 @@ public class ResizableLinearJaggedArray<T>
     {
         return _itemIndex / SegmentLength;
     }
+
+    private int CalculateItemIndexAtSegment(int _itemIndex)
+    {
+        return _itemIndex % SegmentLength;
+    }
 }
