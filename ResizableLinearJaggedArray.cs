@@ -47,6 +47,11 @@ public class ResizableLinearJaggedArray<T>
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Calculates the number of segments required to hold a given number of items.
+    /// </summary>
+    /// <param name="_length">The total number of items that should be hold in segments.</param>
+    /// <returns>The number of segments needed.</returns>
     private int CalculateNumberOfSegments(int _length)
     {
         int _maxIndex = _length - 1;
