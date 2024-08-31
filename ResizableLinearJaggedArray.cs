@@ -35,4 +35,12 @@ public class ResizableLinearJaggedArray<T>
         get { return length; }
         private set { throw new NotImplementedException(); }
     }
+
+    public ResizableLinearJaggedArray(int _length = 0, int _segmentLength = 8)
+    {
+        if (_length < 0)
+            throw new ArgumentOutOfRangeException("Length of array can't be less than zero.");
+
+        throw new NotImplementedException();
+    }
 }
