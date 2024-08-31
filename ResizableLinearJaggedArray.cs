@@ -28,6 +28,7 @@ public class ResizableLinearJaggedArray<T>
     private T[][] array;
 
     public readonly int SegmentLength;
+    public int NumberOfSegments { get { return array.Length; } }
 
     private int length = 0;
     public int Length
