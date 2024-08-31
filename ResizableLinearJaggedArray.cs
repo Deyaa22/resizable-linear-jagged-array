@@ -97,7 +97,7 @@ public class ResizableLinearJaggedArray<T>
     private int CalculateNumberOfSegments(int _length)
     {
         int _maxIndex = _length - 1;
-        int _maxSegmentIndex = _maxIndex / SegmentLength;
+        int _maxSegmentIndex = CalculateSegmentIndex(_maxIndex);
         int _numberOfSegments = _maxSegmentIndex + 1;
         return _numberOfSegments;
     }
