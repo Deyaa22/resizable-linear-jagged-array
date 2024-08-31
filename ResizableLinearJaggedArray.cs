@@ -34,7 +34,27 @@ public class ResizableLinearJaggedArray<T>
     public int Length
     {
         get { return length; }
-        private set { throw new NotImplementedException(); }
+        private set 
+        {
+            if (value < 0)
+                throw new ArgumentOutOfRangeException("New length can't be less than zero.");
+
+            if (value == Length)
+                return;
+
+            int _newNumberOfSegments = CalculateNumberOfSegments(value);
+            if (_newNumberOfSegments != NumberOfSegments)
+            {
+                T[][] _newArray = new T[_newNumberOfSegments][];
+                for (int _segmentIndex = 0; _segmentIndex < _newNumberOfSegments && _segmentIndex < NumberOfSegments; _segmentIndex++)
+                {
+                    _newArray[_segmentIndex] = array[_segmentIndex];
+                }
+                array = _newArray;
+            }
+
+            length = value;
+        }
     }
 
     public ResizableLinearJaggedArray(int _length = 0, int _segmentLength = 8)
