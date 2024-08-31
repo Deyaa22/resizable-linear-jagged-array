@@ -105,6 +105,10 @@ public class ResizableLinearJaggedArray<T>
         }
     }
 
+    public void Resize(int _newLength)
+    {
+        Length = _newLength;
+    }
 
     /// <summary>
     /// Collection Initializer.
