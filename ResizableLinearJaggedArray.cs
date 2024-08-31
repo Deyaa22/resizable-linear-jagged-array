@@ -125,6 +125,10 @@ public class ResizableLinearJaggedArray<T>
         return _itemIndex / SegmentLength;
     }
 
+    /// <summary>
+    /// Calculate the index in segment using the given item index.
+    /// </summary>
+    /// <param name="_itemIndex">The index in the array.</param>
     private int CalculateItemIndexAtSegment(int _itemIndex)
     {
         return _itemIndex % SegmentLength;
