@@ -28,4 +28,11 @@ public class ResizableLinearJaggedArray<T>
     private T[][] array;
 
     public readonly int SegmentLength;
+
+    private int length = 0;
+    public int Length
+    {
+        get { return length; }
+        private set { throw new NotImplementedException(); }
+    }
 }
