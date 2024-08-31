@@ -122,6 +122,11 @@ public class ResizableLinearJaggedArray<T>
         Length = _newLength;
     }
 
+    /// <summary>
+    /// Increments length of array by size.
+    /// </summary>
+    /// <param name="_size"></param>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public void EnglargeBySize(int _size)
     {
         if (_size < 0)
