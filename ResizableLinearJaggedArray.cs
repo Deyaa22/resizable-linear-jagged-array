@@ -26,4 +26,6 @@
 public class ResizableLinearJaggedArray<T>
 {
     private T[][] array;
+
+    public readonly int SegmentLength;
 }
