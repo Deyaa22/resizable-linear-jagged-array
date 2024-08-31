@@ -71,6 +71,24 @@ public class ResizableLinearJaggedArray<T>
         Length = _length;
     }
 
+    public T this[int _index]
+    {
+        get
+        {
+            if (_index >= Length || _index < 0)
+                throw new IndexOutOfRangeException();
+
+            throw new NotImplementedException();
+        }
+        set
+        {
+            if (_index >= Length || _index < 0)
+                throw new IndexOutOfRangeException();
+
+            throw new IndexOutOfRangeException();
+        }
+    }
+
     /// <summary>
     /// Calculates the number of segments required to hold a given number of items.
     /// </summary>
