@@ -105,6 +105,18 @@ public class ResizableLinearJaggedArray<T>
         }
     }
 
+    /// <summary>
+    /// Resizes the Length of array to a new length.
+    /// </summary>
+    /// <param name="_newLength">
+    /// The new length of the array.
+    /// </param>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// Thrown [indside Length] when the specified new length is less than zero.
+    /// </exception>
+    /// <remarks>
+    ///     <b>Warning:</b> Resizing to a smaller length will result in the deletion of data at higher truncated indexes.
+    /// </remarks>
     public void Resize(int _newLength)
     {
         Length = _newLength;
