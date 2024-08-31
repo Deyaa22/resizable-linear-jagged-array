@@ -44,7 +44,10 @@ public class ResizableLinearJaggedArray<T>
         if (_segmentLength <= 0)
             throw new ArgumentOutOfRangeException("Segment length can't be zero nor less.");
 
-        throw new NotImplementedException();
+        SegmentLength = _segmentLength;
+        int _numberOfSegment = CalculateNumberOfSegments(_length);
+        array = new T[_numberOfSegment][];
+        Length = _length;
     }
 
     /// <summary>
