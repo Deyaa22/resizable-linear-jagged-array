@@ -166,11 +166,21 @@ public class ResizableLinearJaggedArray<T>
         this[MaxIndex] = _item;
     }
 
+    /// <summary>
+    /// Cleanes array from empty segments.
+    /// </summary>
     public void CleanEmptySegments()
     {
         CleanEmptySegments(0, Length);
     }
 
+    /// <summary>
+    /// Cleanes array from empty segments within given rang.
+    /// </summary>
+    /// <param name="_startIndex"></param>
+    /// <param name="_amount"></param>
+    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public void CleanEmptySegments(int _startIndex, int _amount)
     {
         if (Length == 0)
