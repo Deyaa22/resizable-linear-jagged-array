@@ -135,6 +135,17 @@ public class ResizableLinearJaggedArray<T>
         Resize(Length + _size);
     }
 
+    public void ShrinkBySize(int _size)
+    {
+        if (_size < 0)
+            throw new ArgumentOutOfRangeException("Can't shrink array with minus number.");
+
+        if (_size > Length)
+            throw new ArgumentOutOfRangeException("Can't shrink array more than its actual length.");
+
+        Resize(Length - _size);
+    }
+
     /// <summary>
     /// Collection Initializer.
     /// Adds new item on top of array,
