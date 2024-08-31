@@ -41,6 +41,9 @@ public class ResizableLinearJaggedArray<T>
         if (_length < 0)
             throw new ArgumentOutOfRangeException("Length of array can't be less than zero.");
 
+        if (_segmentLength <= 0)
+            throw new ArgumentOutOfRangeException("Segment length can't be zero nor less.");
+
         throw new NotImplementedException();
     }
 }
