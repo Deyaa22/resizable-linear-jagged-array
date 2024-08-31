@@ -183,14 +183,14 @@ public class ResizableLinearJaggedArray<T>
             return;
 
         int _endIndex = _startIndex + _amount - 1;
-        if (!(_endIndex % SegmentLength == 0)) // if index is not first index in segment
+        if (!IsFirstIndexInSegment(_endIndex))
         {
-            _startIndex = CalculateNumberOfSegments(_endIndex + 1) * SegmentLength;
+            _startIndex = GetFirstIndexOfNextSegment(_endIndex);
         }
 
-        if (!(_endIndex % SegmentLength == SegmentLength - 1)) // if index is not last index in segment
+        if (!IsLastIndexInSegment(_endIndex))
         {
-            _endIndex = ((CalculateNumberOfSegments(_endIndex + 1) - 1) * SegmentLength) - 1;
+            _endIndex = GetLastIndexOfPreviousSegment(_endIndex);
         }
 
         int _startSegmentIndex = CalculateSegmentIndex(_startIndex);
