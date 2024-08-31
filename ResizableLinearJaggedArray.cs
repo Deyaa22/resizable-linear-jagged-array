@@ -57,6 +57,8 @@ public class ResizableLinearJaggedArray<T>
         }
     }
 
+    public int MaxIndex { get { return Length - 1; } }
+
     public ResizableLinearJaggedArray(int _length = 0, int _segmentLength = 8)
     {
         if (_length < 0)
