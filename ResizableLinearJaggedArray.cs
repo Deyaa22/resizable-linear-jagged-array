@@ -119,18 +119,18 @@ public class ResizableLinearJaggedArray<T>
     /// <summary>
     /// Calculates the index of a segment which holds index"
     /// </summary>
-    /// <param name="_itemIndex">The index wich should be contained in a segment.</param>
-    private int CalculateSegmentIndex(int _itemIndex)
+    /// <param name="_index">The index wich should be contained in a segment.</param>
+    private int CalculateSegmentIndex(int _index)
     {
-        return _itemIndex / SegmentLength;
+        return _index / SegmentLength;
     }
 
     /// <summary>
     /// Calculate the index in segment using the given item index.
     /// </summary>
-    /// <param name="_itemIndex">The index in the array.</param>
-    private int CalculateItemIndexAtSegment(int _itemIndex)
+    /// <param name="_index">The index in the array.</param>
+    private int CalculateItemIndexAtSegment(int _index)
     {
-        return _itemIndex % SegmentLength;
+        return _index % SegmentLength;
     }
 }
