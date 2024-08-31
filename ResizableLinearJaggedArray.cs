@@ -1,6 +1,6 @@
 ﻿namespace ResizableLinearJaggedArray;
 
-public class ResizableLinearJaggedArray
+public class ResizableLinearJaggedArray<T>
 {
 
 }
