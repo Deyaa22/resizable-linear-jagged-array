@@ -46,4 +46,12 @@ public class ResizableLinearJaggedArray<T>
 
         throw new NotImplementedException();
     }
+
+    private int CalculateNumberOfSegments(int _length)
+    {
+        int _maxIndex = _length - 1;
+        int _maxSegmentIndex = _maxIndex / SegmentLength;
+        int _numberOfSegments = _maxSegmentIndex + 1;
+        return _numberOfSegments;
+    }
 }
