@@ -93,7 +93,13 @@ public class ResizableLinearJaggedArray<T>
             if (_index >= Length || _index < 0)
                 throw new IndexOutOfRangeException();
 
-            throw new IndexOutOfRangeException();
+            int _segmentIndex = CalculateSegmentIndex(_index);
+            int _itemIndexAtSegment = _index % SegmentLength;
+
+            if (array[_segmentIndex] == null)
+                array[_segmentIndex] = new T[SegmentLength];
+
+            array[_segmentIndex][_itemIndexAtSegment] = value;
         }
     }
 
