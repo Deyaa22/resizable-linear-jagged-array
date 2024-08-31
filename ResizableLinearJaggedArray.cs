@@ -108,7 +108,7 @@ public class ResizableLinearJaggedArray<T>
     public void Add(T _item)
     {
         Length++;
-        this[Length - 1] = _item;
+        this[MaxIndex] = _item;
     }
 
     /// <summary>
