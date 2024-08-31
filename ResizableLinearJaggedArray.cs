@@ -105,6 +105,16 @@ public class ResizableLinearJaggedArray<T>
         }
     }
 
+
+    /// <summary>
+    /// Collection Initializer.
+    /// Adds new item on top of array,
+    /// Method increments length by one.
+    /// </summary>
+    /// <param name="_item"></param>
+    /// <remarks>
+    ///     <b>Warning:</b> For adding items repeatedly, It's better to resize the array, then assign items.
+    /// </remarks>
     public void Add(T _item)
     {
         Length++;
