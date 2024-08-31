@@ -135,6 +135,11 @@ public class ResizableLinearJaggedArray<T>
         Resize(Length + _size);
     }
 
+    /// <summary>
+    /// Decrements length of array by size.
+    /// </summary>
+    /// <param name="_size"></param>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public void ShrinkBySize(int _size)
     {
         if (_size < 0)
