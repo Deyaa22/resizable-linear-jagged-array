@@ -166,6 +166,57 @@ public class ResizableLinearJaggedArray<T>
         this[MaxIndex] = _item;
     }
 
+    public void CleanEmptySegments()
+    {
+        CleanEmptySegments(0, Length);
+    }
+
+    public void CleanEmptySegments(int _startIndex, int _amount)
+    {
+        if (Length == 0)
+            throw new InvalidOperationException("Length of array is 0, Can't operate on an empty array.");
+
+        if (_startIndex < 0 || _startIndex >= Length || _amount < 0)
+            throw new ArgumentOutOfRangeException("length");
+
+        if (_amount == 0)
+            return;
+
+        int _endIndex = _startIndex + _amount - 1;
+        if (!(_endIndex % SegmentLength == 0)) // if index is not first index in segment
+        {
+            _startIndex = CalculateNumberOfSegments(_endIndex + 1) * SegmentLength;
+        }
+
+        if (!(_endIndex % SegmentLength == SegmentLength - 1)) // if index is not last index in segment
+        {
+            _endIndex = ((CalculateNumberOfSegments(_endIndex + 1) - 1) * SegmentLength) - 1;
+        }
+
+        int _startSegmentIndex = CalculateSegmentIndex(_startIndex);
+        int _endSegmentIndex = CalculateSegmentIndex(_endIndex);
+
+        for (int i = _startSegmentIndex; i <= _endSegmentIndex; i++)
+        {
+            T[] _segment = array[i];
+            if (_segment == null)
+                continue;
+
+            bool _segmentIsEmpty = true;
+            for (int j = 0; j < _segment.Length; j++)
+            {
+                T _item = _segment[j];
+                bool _itemIsExisted = _item != null && !_item.Equals(default(T));
+                _segmentIsEmpty = !_itemIsExisted;
+                if (!_segmentIsEmpty)
+                    break;
+            }
+
+            if (_segmentIsEmpty)
+                array[i] = null;
+        }
+    }
+
     /// <summary>
     /// Calculates the number of segments required to hold a given number of items.
     /// </summary>
