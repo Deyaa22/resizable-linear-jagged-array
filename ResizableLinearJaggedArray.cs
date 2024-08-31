@@ -122,6 +122,14 @@ public class ResizableLinearJaggedArray<T>
         Length = _newLength;
     }
 
+    public void EnglargeBySize(int _size)
+    {
+        if (_size < 0)
+            throw new ArgumentOutOfRangeException("Can't enlarge array with minus number.");
+
+        Resize(Length + _size);
+    }
+
     /// <summary>
     /// Collection Initializer.
     /// Adds new item on top of array,
