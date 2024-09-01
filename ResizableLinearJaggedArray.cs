@@ -200,6 +200,9 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>
     /// </summary>
     public void CleanEmptySegments()
     {
+        if (Length == 0)
+            return;
+
         CleanEmptySegments(0, Length);
     }
 
