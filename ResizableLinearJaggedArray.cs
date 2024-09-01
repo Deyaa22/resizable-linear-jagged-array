@@ -45,6 +45,9 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>
             if (_newLength < 0)
                 throw new ArgumentOutOfRangeException("New length can't be less than zero.");
 
+            if (_newLength == Length)
+                return;
+
             if (_newLength == 0)
             {
                 array = new T[0][];
