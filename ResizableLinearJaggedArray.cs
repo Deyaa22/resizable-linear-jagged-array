@@ -218,7 +218,7 @@ public class ResizableLinearJaggedArray<T>
             for (int j = 0; j < _segment.Length; j++)
             {
                 T _item = _segment[j];
-                bool _itemIsExisted = _item != null && !_item.Equals(default(T));
+                bool _itemIsExisted = !ValueEqualsDefault(_item);
                 _segmentIsEmpty = !_itemIsExisted;
                 if (!_segmentIsEmpty)
                     break;
