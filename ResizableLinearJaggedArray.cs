@@ -225,7 +225,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>
             return;
 
         int _endIndex = _startIndex + _amount - 1;
-        if (!IsFirstIndexInSegment(_endIndex))
+        if (!IsFirstIndexInSegment(_startIndex))
         {
             _startIndex = GetFirstIndexOfNextSegment(_endIndex);
         }
