@@ -25,7 +25,7 @@ namespace ResizableLinearJaggedArray.Generics;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 
-public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable
+public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollection
 {
     private T[][] array;
 
@@ -87,6 +87,14 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable
     }
 
     public int MaxIndex { get { return Length - 1; } }
+
+    public int Count { get { return Length; } }
+
+    public bool IsReadOnly { get { return false; } }
+
+    public bool IsSynchronized { get { return false; } }
+
+    public object SyncRoot { get { return this; } }
 
     public ResizableLinearJaggedArray(int _length = 0, int _segmentLength = 8)
     {
@@ -344,4 +352,50 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable
     {
         return (this as IEnumerable).GetEnumerator();
     }
+
+    void ICollection<T>.Clear()
+    {
+        Length = 0;
+    }
+
+    bool ICollection<T>.Contains(T _item)
+    {
+        return this.Contains((T) _item);
+    }
+
+    void ICollection.CopyTo(Array _array, int _arrayIndex)
+    {
+        for (int i = _arrayIndex; i < _array.Length && i < Length; i++)
+        {
+            _array.SetValue(this[i], i);
+        }
+    }
+    void ICollection<T>.CopyTo(T[] _array, int _arrayIndex)
+    {
+        (this as ICollection).CopyTo(_array, _arrayIndex);
+    }
+
+    bool ICollection<T>.Remove(T _item)
+    {
+        int _index = -1;
+        for (int i = 0; i < Length; i++)
+        {
+            if ((object?)this[i] == (object?)_item)
+            {
+                _index = i;
+                break;
+            }
+        }
+
+        if (_index == -1)
+            return false;
+
+        for (int i = _index; i < MaxIndex; i++)
+        {
+            this[i] = this[i + 1];
+        }
+
+        return true;
+    }
+
 }
