@@ -25,7 +25,7 @@ namespace ResizableLinearJaggedArray.Generics;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 
-public class ResizableLinearJaggedArray<T> : IEnumerable<T>
+public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable
 {
     private T[][] array;
 
