@@ -25,7 +25,7 @@ namespace ResizableLinearJaggedArray.Generics;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 
-public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollection, IList<T>, IList
+public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollection, IList<T>, IList, IStructuralComparable
 {
     private T[][] array;
 
@@ -493,5 +493,27 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
             this[i] = this[i + 1];
         }
         ShrinkBySize(1);
+    }
+
+    int IStructuralComparable.CompareTo(object? _other, IComparer _comparer)
+    {
+        if (_other == null)
+            return 1;
+
+        ResizableLinearJaggedArray<T> _array = _other as ResizableLinearJaggedArray<T>;
+        if (_array == null || this.Length != _array.Length)
+        {
+            throw new ArgumentException("Can't compare two arrays with different lengthes.");
+        }
+
+        int _index = 0;
+        ComparisonState _state = 0;
+        while (_index < _array.Length && _state == ComparisonState.Equal)
+        {
+            _state = (ComparisonState)_comparer.Compare(this[_index], _array[_index]);
+            _index++;
+        }
+
+        return (int)_state;
     }
 }
