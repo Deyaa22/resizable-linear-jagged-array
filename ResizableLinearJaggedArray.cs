@@ -266,6 +266,9 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>
     /// <returns>The number of segments needed.</returns>
     private int CalculateNumberOfSegments(int _length)
     {
+        if (_length == 0)
+            return 0;
+
         int _maxIndex = _length - 1;
         int _maxSegmentIndex = CalculateSegmentIndex(_maxIndex);
         int _numberOfSegments = _maxSegmentIndex + 1;
