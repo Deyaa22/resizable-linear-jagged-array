@@ -25,7 +25,7 @@ namespace ResizableLinearJaggedArray.Generics;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 
-public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollection, IList<T>, IList, IStructuralComparable, IStructuralEquatable
+public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollection, IList<T>, IList, IStructuralComparable, IStructuralEquatable, ICloneable
 {
     private T[][] array;
 
@@ -541,5 +541,16 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     int IStructuralEquatable.GetHashCode(IEqualityComparer comparer)
     {
         return this.GetHashCode();
+    }
+
+    object ICloneable.Clone()
+    {
+        ResizableLinearJaggedArray<T> _array = new ResizableLinearJaggedArray<T>(Length);
+        for (int i = 0; i < Length; i++)
+        {
+            _array[i] = this[i];
+        }
+
+        return _array;
     }
 }
