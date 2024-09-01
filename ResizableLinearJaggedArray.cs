@@ -283,4 +283,9 @@ public class ResizableLinearJaggedArray<T>
         _index = ((CalculateNumberOfSegments(_length) - 1) * SegmentLength) - 1;
         return _index;
     }
+
+    private bool ValueEqualsDefault(object? _value)
+    {
+        return !(_value != null && !_value.Equals(default(T)));
+    }
 }
