@@ -1,4 +1,6 @@
-﻿namespace ResizableLinearJaggedArray.Generics;
+﻿using System.Collections;
+
+namespace ResizableLinearJaggedArray.Generics;
 
 /// <summary>
 /// RLJArray: A generic resizable linear array with a jagged array as internal structure,
@@ -23,7 +25,7 @@
 /// </summary>
 /// <typeparam name="T"></typeparam>
 
-public class ResizableLinearJaggedArray<T>
+public class ResizableLinearJaggedArray<T> : IEnumerable<T>
 {
     private T[][] array;
 
@@ -287,5 +289,28 @@ public class ResizableLinearJaggedArray<T>
     private bool ValueEqualsDefault(object? _value)
     {
         return !(_value != null && !_value.Equals(default(T)));
+    }
+
+    public IEnumerator<T> GetEnumerator()
+    {
+        for (int i = 0; i < Length; i++)
+        {
+            int _segmentIndex = CalculateSegmentIndex(i);
+            int _itemIndex = CalculateItemIndexAtSegment(i);
+
+            if (array[_segmentIndex] != null)
+            {
+                yield return array[_segmentIndex][_itemIndex];
+            }
+            else
+            {
+                yield return default(T);
+            }
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return (this as IEnumerable).GetEnumerator();
     }
 }
