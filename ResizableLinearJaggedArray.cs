@@ -40,24 +40,46 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>
         get { return length; }
         private set 
         {
-            if (value < 0)
+            int _newLength = value;
+
+            if (_newLength < 0)
                 throw new ArgumentOutOfRangeException("New length can't be less than zero.");
 
-            if (value == Length)
-                return;
-
-            int _newNumberOfSegments = CalculateNumberOfSegments(value);
-            if (_newNumberOfSegments != NumberOfSegments)
+            if (_newLength == 0)
             {
-                T[][] _newArray = new T[_newNumberOfSegments][];
-                for (int _segmentIndex = 0; _segmentIndex < _newNumberOfSegments && _segmentIndex < NumberOfSegments; _segmentIndex++)
+                array = new T[0][];
+            }
+            else
+            {
+                int _newNumberOfSegments = CalculateNumberOfSegments(_newLength);
+                if (_newNumberOfSegments != NumberOfSegments)
                 {
-                    _newArray[_segmentIndex] = array[_segmentIndex];
+                    T[][] _newArray = new T[_newNumberOfSegments][];
+                    for (int _segmentIndex = 0; _segmentIndex < _newNumberOfSegments && _segmentIndex < NumberOfSegments; _segmentIndex++)
+                    {
+                        _newArray[_segmentIndex] = array[_segmentIndex];
+                    }
+                    array = _newArray;
                 }
-                array = _newArray;
+
+                if (_newLength < Length)
+                {
+                    int _segmentIndex = CalculateSegmentIndex(_newLength);
+                    int _itemIndex = CalculateItemIndexAtSegment(_newLength);
+                    T[] _segment = null;
+                    if (array[_segmentIndex] != null)
+                    {
+                        _segment = array[_segmentIndex];
+
+                        for (int i = _itemIndex; i < SegmentLength; i++)
+                        {
+                            _segment[i] = default(T);
+                        }
+                    }
+                }
             }
 
-            length = value;
+            length = _newLength;
         }
     }
 
