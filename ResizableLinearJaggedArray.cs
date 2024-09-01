@@ -25,7 +25,7 @@ namespace ResizableLinearJaggedArray.Generics;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 
-public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollection
+public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollection, IList<T>, IList
 {
     private T[][] array;
 
@@ -95,6 +95,10 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     public bool IsSynchronized { get { return false; } }
 
     public object SyncRoot { get { return this; } }
+
+    public bool IsFixedSize { get { return false; } }
+
+    object? IList.this[int index] { get { return this[index]; } set { this[index] = (T)value; } }
 
     public ResizableLinearJaggedArray(int _length = 0, int _segmentLength = 8)
     {
@@ -406,4 +410,88 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         return true;
     }
 
+    int IList<T>.IndexOf(T _item)
+    {
+        return Array.FindIndex(this.ToArray<T>(), (T _value) => { return (_value as object) == (_item as object); });
+    }
+
+    void IList<T>.Insert(int _index, T _item)
+    {
+        ++Length;
+
+        for (int i = MaxIndex; i > _index; i--)
+        {
+            this[i] = this[i - 1];
+        }
+
+        this[_index] = _item;
+    }
+
+    void IList<T>.RemoveAt(int _index)
+    {
+        if (_index == -1)
+            throw new IndexOutOfRangeException();
+
+        for (int i = _index; i < MaxIndex; i++)
+        {
+            this[i] = this[i + 1];
+        }
+    }
+
+    int IList.Add(object? _value)
+    {
+        if (array == null)
+        {
+            throw new NullReferenceException("array is null, Index to insert item is -1");
+            return -1; // this doesn't give any meaning but IList.Add made to return -1 when adding new item fails.
+        }
+
+        Add((T)_value);
+        return Length - 1;
+    }
+
+    void IList.Clear()
+    {
+        array = new T[0][];
+    }
+
+    bool IList.Contains(object? _value)
+    {
+        return this.Contains((T)_value);
+    }
+
+    int IList.IndexOf(object? _value)
+    {
+        return Array.FindIndex(this.ToArray<T>(), (T _item) => { return (_item as object) == _value; });
+    }
+
+    void IList.Insert(int _index, object? _value)
+    {
+        if (_index < 0 || _index >= Length)
+            throw new ArgumentOutOfRangeException("index");
+
+        if (!ValueEqualsDefault(_value))
+            this[_index] = (T)_value;
+    }
+
+    void IList.Remove(object? _value)
+    {
+        int _itemIndex = (this as IList).IndexOf(_value);
+        if (_itemIndex == -1)
+            throw new ArgumentException("Array doesn't contain value.");
+
+        (this as IList).RemoveAt(_itemIndex);
+    }
+
+    void IList.RemoveAt(int _index)
+    {
+        if (_index <= -1 || _index > MaxIndex)
+            throw new IndexOutOfRangeException();
+
+        for (int i = _index; i < MaxIndex; i++)
+        {
+            this[i] = this[i + 1];
+        }
+        ShrinkBySize(1);
+    }
 }
