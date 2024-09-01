@@ -375,6 +375,14 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         (this as ICollection).CopyTo(_array, _arrayIndex);
     }
 
+    public void CopyTo(ResizableLinearJaggedArray<T> _array, int _arrayIndex)
+    {
+        for (int i = _arrayIndex; i < _array.Length && i < Length; i++)
+        {
+            _array[i] = this[i];
+        }
+    }
+
     bool ICollection<T>.Remove(T _item)
     {
         int _index = -1;
