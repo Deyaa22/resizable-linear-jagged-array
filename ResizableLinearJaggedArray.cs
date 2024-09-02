@@ -406,6 +406,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         {
             this[i] = this[i + 1];
         }
+        ShrinkBySize(1);
 
         return true;
     }
