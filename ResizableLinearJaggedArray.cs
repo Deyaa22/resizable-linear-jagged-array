@@ -438,6 +438,27 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         }
     }
 
+    void IList.Remove(object? _value)
+    {
+        int _itemIndex = (this as IList).IndexOf(_value);
+        if (_itemIndex == -1)
+            throw new ArgumentException("Array doesn't contain value.");
+
+        (this as IList).RemoveAt(_itemIndex);
+    }
+
+    void IList.RemoveAt(int _index)
+    {
+        if (_index <= -1 || _index > MaxIndex)
+            throw new IndexOutOfRangeException();
+
+        for (int i = _index; i < MaxIndex; i++)
+        {
+            this[i] = this[i + 1];
+        }
+        ShrinkBySize(1);
+    }
+
     int IList.Add(object? _value)
     {
         if (array == null)
@@ -472,27 +493,6 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
         if (!ValueEqualsDefault(_value))
             this[_index] = (T)_value;
-    }
-
-    void IList.Remove(object? _value)
-    {
-        int _itemIndex = (this as IList).IndexOf(_value);
-        if (_itemIndex == -1)
-            throw new ArgumentException("Array doesn't contain value.");
-
-        (this as IList).RemoveAt(_itemIndex);
-    }
-
-    void IList.RemoveAt(int _index)
-    {
-        if (_index <= -1 || _index > MaxIndex)
-            throw new IndexOutOfRangeException();
-
-        for (int i = _index; i < MaxIndex; i++)
-        {
-            this[i] = this[i + 1];
-        }
-        ShrinkBySize(1);
     }
 
     int IStructuralComparable.CompareTo(object? _other, IComparer _comparer)
