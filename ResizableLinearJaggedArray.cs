@@ -536,15 +536,15 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         if (_other == null)
             return false;
 
-        ResizableLinearJaggedArray<T> _array = _other as ResizableLinearJaggedArray<T>;
-        if (this.Length != _array.Length)
+        ResizableLinearJaggedArray<T> _otherArray = _other as ResizableLinearJaggedArray<T>;
+        if (this.Length != _otherArray.Length)
             return false;
 
 
         int _index = 0;
         while (_index < Length)
         {
-            if (!_comparer.Equals(this[_index], (_other as ResizableLinearJaggedArray<T>)[_index]))
+            if (!_comparer.Equals(this[_index], _otherArray[_index]))
                 return false;
             _index++;
         }
