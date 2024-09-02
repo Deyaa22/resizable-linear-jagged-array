@@ -67,14 +67,14 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
                 if (_newLength < Length)
                 {
-                    int _segmentIndex = CalculateSegmentIndex(_newLength);
-                    int _itemIndex = CalculateItemIndexAtSegment(_newLength);
+                    int _segmentIndex = CalculateSegmentIndex(_newLength - 1);
+                    int _itemIndex = CalculateItemIndexAtSegment(_newLength - 1);
                     T[] _segment = null;
                     if (array[_segmentIndex] != null)
                     {
                         _segment = array[_segmentIndex];
 
-                        for (int i = _itemIndex; i < SegmentLength; i++)
+                        for (int i = _itemIndex + 1; i < SegmentLength; i++)
                         {
                             _segment[i] = default(T);
                         }
