@@ -410,23 +410,6 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         return true;
     }
 
-    int IList<T>.IndexOf(T _item)
-    {
-        return Array.FindIndex(this.ToArray<T>(), (T _value) => { return (_value as object) == (_item as object); });
-    }
-
-    void IList<T>.Insert(int _index, T _item)
-    {
-        ++Length;
-
-        for (int i = MaxIndex; i > _index; i--)
-        {
-            this[i] = this[i - 1];
-        }
-
-        this[_index] = _item;
-    }
-
     void IList<T>.RemoveAt(int _index)
     {
         (this as IList).RemoveAt(_index);
@@ -451,6 +434,23 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
             this[i] = this[i + 1];
         }
         ShrinkBySize(1);
+    }
+
+    int IList<T>.IndexOf(T _item)
+    {
+        return Array.FindIndex(this.ToArray<T>(), (T _value) => { return (_value as object) == (_item as object); });
+    }
+
+    void IList<T>.Insert(int _index, T _item)
+    {
+        ++Length;
+
+        for (int i = MaxIndex; i > _index; i--)
+        {
+            this[i] = this[i - 1];
+        }
+
+        this[_index] = _item;
     }
 
     int IList.Add(object? _value)
