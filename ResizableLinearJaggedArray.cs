@@ -197,6 +197,20 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         Resize(Length - _size);
     }
 
+    public bool Contains(object? _item, out int _index)
+    {
+        _index = -1;
+        for (int i = 0; i < Length; i++)
+        {
+            if (this[i] as object == _item)
+            {
+                _index = i;
+                return true;
+            }
+        }
+        return false;
+    }
+
     /// <summary>
     /// Collection Initializer.
     /// Adds new item on top of array,
@@ -369,7 +383,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
     bool ICollection<T>.Contains(T _item)
     {
-        return this.Contains((T) _item);
+        return Contains(_item, out _);
     }
 
     void ICollection.CopyTo(Array _array, int _arrayIndex)
@@ -478,7 +492,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
     bool IList.Contains(object? _value)
     {
-        return this.Contains((T)_value);
+        return Contains(_value, out _);
     }
 
     int IList.IndexOf(object? _value)
