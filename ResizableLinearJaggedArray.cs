@@ -429,13 +429,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
     void IList<T>.RemoveAt(int _index)
     {
-        if (_index == -1)
-            throw new IndexOutOfRangeException();
-
-        for (int i = _index; i < MaxIndex; i++)
-        {
-            this[i] = this[i + 1];
-        }
+        (this as IList).RemoveAt(_index);
     }
 
     void IList.Remove(object? _value)
