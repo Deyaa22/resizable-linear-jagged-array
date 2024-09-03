@@ -471,6 +471,15 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         }
     }
 
+    public void CopyTo(Array array, long index)
+    {
+        if (index > 2147483647L || index < -2147483648L)
+        {
+            throw new ArgumentOutOfRangeException("index", "Arrays larger than 2GB are not supported.");
+        }
+        this.CopyTo(array, (int)index);
+    }
+
     bool ICollection<T>.Remove(T _item)
     {
         int _index = -1;
