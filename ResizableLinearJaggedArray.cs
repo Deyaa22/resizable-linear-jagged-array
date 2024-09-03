@@ -45,6 +45,25 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
             return _counter;
         }
     }
+    public int NumberOfEmptySegments
+    {
+        get
+        {
+            int _counter = 0;
+            for (int i = 0; i < array.Length; i++)
+            {
+                for (int j = 0; array[i] != null && j < array[i].Length; j++)
+                {
+                    if (!EqualsDefault(array[i][j]))
+                        break;
+
+                    if (j == SegmentLength - 1)
+                        _counter++;
+                }
+            }
+            return _counter;
+        }
+    }
 
     private int length = 0;
     public int Length
