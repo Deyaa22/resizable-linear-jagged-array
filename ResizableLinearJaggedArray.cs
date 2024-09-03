@@ -34,6 +34,12 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     public readonly int SegmentLength;
 
     public int NumberOfSegments { get { return array.Length; } }
+    /// <summary>
+    /// Gets the number of segments that are null in memory.
+    /// </summary>
+    /// <remarks>
+    ///     <b>Note:</b> Null segments do not affect data assignment or retrieval, but they help conserve memory.
+    /// </remarks>
     public int NumberOfNullSegments
     {
         get
