@@ -32,7 +32,19 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     public readonly int Rank = 1;
 
     public readonly int SegmentLength;
+
     public int NumberOfSegments { get { return array.Length; } }
+    public int NumberOfNullSegments
+    {
+        get
+        {
+            int _counter = 0;
+            for (int i = 0; i < array.Length; i++)
+                if (array[i] == null)
+                    _counter++;
+            return _counter;
+        }
+    }
 
     private int length = 0;
     public int Length
