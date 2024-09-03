@@ -51,6 +51,12 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
             return _counter;
         }
     }
+    /// <summary>
+    /// Gets the number of segments that contain only default values in memory, but are not null.
+    /// </summary>
+    /// <remarks>
+    ///     <b>Note:</b> It is recommended to clean empty segments using the 'CleanEmptySegments' method to save memory.
+    /// </remarks>
     public int NumberOfEmptySegments
     {
         get
