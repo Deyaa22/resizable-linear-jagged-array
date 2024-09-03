@@ -445,17 +445,22 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         return Contains(_item, out _);
     }
 
-    void ICollection.CopyTo(Array _array, int _arrayIndex)
+    public void CopyTo(Array _array, int _arrayIndex)
     {
+        if (array != null && array.Rank != 1)
+        {
+            throw new ArgumentException("Only single dimensional arrays are supported for the requested action.");
+        }
+
         for (int i = _arrayIndex; i < _array.Length && i < Length; i++)
         {
             _array.SetValue(this[i], i);
         }
     }
 
-    void ICollection<T>.CopyTo(T[] _array, int _arrayIndex)
+    public void CopyTo(T[] _array, int _arrayIndex)
     {
-        (this as ICollection).CopyTo(_array, _arrayIndex);
+        CopyTo((Array) _array, _arrayIndex);
     }
 
     public void CopyTo(ResizableLinearJaggedArray<T> _array, int _arrayIndex)
