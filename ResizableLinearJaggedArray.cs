@@ -33,6 +33,9 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
     public readonly int SegmentLength;
 
+    /// <summary>
+    /// Gets the total number of segments used in the array.
+    /// </summary>
     public int TotalNumberOfSegments { get { return array.Length; } }
     /// <summary>
     /// Gets the number of segments that are null in memory.
