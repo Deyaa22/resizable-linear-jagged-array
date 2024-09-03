@@ -495,9 +495,20 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         return Contains(_value, out _);
     }
 
-    int IList.IndexOf(object? _value)
+    int IList.IndexOf(object? _item)
     {
-        return Array.FindIndex(this.ToArray<T>(), (T _item) => { return (_item as object) == _value; });
+        int _index = -1;
+        for (int i = 0; i < Length; i++)
+        {
+            var _arrayItem = this[i];
+            if (_arrayItem == null && _item == null)
+                return _index;
+            else if (_arrayItem == null || _item == null)
+                continue;
+            else if (_arrayItem != null && _arrayItem.Equals(_item))
+                return i;
+        }
+        return _index;
     }
 
     void IList.Insert(int _index, object? _value)
