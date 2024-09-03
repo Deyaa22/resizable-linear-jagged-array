@@ -458,7 +458,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
     int IList<T>.IndexOf(T _item)
     {
-        return Array.FindIndex(this.ToArray<T>(), (T _value) => { return (_value as object) == (_item as object); });
+        return (this as IList).IndexOf(_item);
     }
 
     void IList<T>.Insert(int _index, T _item)
