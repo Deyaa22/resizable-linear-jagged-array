@@ -151,6 +151,13 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     }
 
     public int MaxIndex { get { return Length - 1; } }
+    public int GetUpperBound(int _dimension = 0)
+    {
+        if (_dimension != 0)
+            throw new ArgumentOutOfRangeException("RLJArray acts like a normal linear array, RLJArray doesn't support multiple dimentions");
+
+        return MaxIndex;
+    }
 
     public int Count { get { return Length; } }
 
