@@ -393,6 +393,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
             _array.SetValue(this[i], i);
         }
     }
+
     void ICollection<T>.CopyTo(T[] _array, int _arrayIndex)
     {
         (this as ICollection).CopyTo(_array, _arrayIndex);
