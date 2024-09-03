@@ -111,7 +111,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         SegmentLength = _segmentLength;
         int _numberOfSegment = CalculateNumberOfSegments(_length);
         array = new T[_numberOfSegment][];
-        Length = _length;
+        Resize(_length);
     }
 
     public T this[int _index]
@@ -222,7 +222,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     /// </remarks>
     public void Add(T _item)
     {
-        Length++;
+        Resize(Length + 1);
         this[MaxIndex] = _item;
     }
 
