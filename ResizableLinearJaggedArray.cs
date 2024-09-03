@@ -378,7 +378,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
     void ICollection<T>.Clear()
     {
-        Length = 0;
+        Resize(0);
     }
 
     bool ICollection<T>.Contains(T _item)
@@ -487,7 +487,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
     void IList.Clear()
     {
-        array = new T[0][];
+        Resize(0);
     }
 
     bool IList.Contains(object? _value)
