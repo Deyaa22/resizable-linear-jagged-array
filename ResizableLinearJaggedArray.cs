@@ -202,7 +202,8 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         _index = -1;
         for (int i = 0; i < Length; i++)
         {
-            if (this[i] as object == _item)
+            var _arrayItem = this[i] as object;
+            if (_arrayItem != null && _arrayItem.Equals(_item))
             {
                 _index = i;
                 return true;
