@@ -145,9 +145,9 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
             return (long)this.GetLength();
         }
     }
-    public long GetLongLength(int dimension)
+    public long GetLongLength(int _dimension = 0)
     {
-        return (long)this.GetLength(dimension);
+        return (long)this.GetLength(_dimension);
     }
 
     public int MaxIndex { get { return Length - 1; } }
