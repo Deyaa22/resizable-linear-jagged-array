@@ -632,7 +632,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         return this.GetHashCode();
     }
 
-    object ICloneable.Clone()
+    public object Clone()
     {
         ResizableLinearJaggedArray<T> _array = new ResizableLinearJaggedArray<T>(Length);
         for (int i = 0; i < Length; i++)
