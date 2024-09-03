@@ -632,6 +632,15 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         return this.GetHashCode();
     }
 
+    /// <summary>
+    /// Return new object of type <see cref="ResizableLinearJaggedArray{T}"/> with same data and size of this instance.
+    /// </summary>
+    /// <remarks>
+    /// <b>Note:</b> Method return an object of type <see cref="ResizableLinearJaggedArray{T}"/>
+    /// </remarks>
+    /// <returns>
+    /// An object of type <see cref="Type1"/>.
+    /// </returns>
     public object Clone()
     {
         ResizableLinearJaggedArray<T> _array = new ResizableLinearJaggedArray<T>(Length);
