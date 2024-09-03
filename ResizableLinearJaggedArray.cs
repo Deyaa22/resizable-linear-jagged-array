@@ -505,8 +505,14 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         if (_index < 0 || _index >= Length)
             throw new ArgumentOutOfRangeException("index");
 
-        if (!ValueEqualsDefault(_value))
-            this[_index] = (T)_value;
+        Resize(Length + 1);
+
+        for (int i = MaxIndex; i > _index; i--)
+        {
+            this[i] = this[i - 1];
+        }
+
+        this[_index] = (T)_value;
     }
 
     int IStructuralComparable.CompareTo(object? _other, IComparer _comparer)
