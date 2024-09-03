@@ -151,6 +151,13 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     }
 
     public int MaxIndex { get { return Length - 1; } }
+
+    /// <summary>
+    /// Return  The last index [<see cref="MaxIndex"/>] in array.
+    /// </summary>
+    /// <param name="_dimension"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when non zero value entered for <param name="_dimension"></param>.</exception>
     public int GetUpperBound(int _dimension = 0)
     {
         if (_dimension != 0)
