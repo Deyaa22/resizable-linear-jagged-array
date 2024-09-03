@@ -141,7 +141,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
             if(array[_segmentIndex] == null)
             {
-                if (ValueEqualsDefault(value))
+                if (EqualsDefault(value))
                     return;
                 else
                     array[_segmentIndex] = new T[SegmentLength];
@@ -203,7 +203,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         for (int i = 0; i < Length; i++)
         {
             var _arrayItem = this[i] as object;
-            if (_arrayItem != null && _arrayItem.Equals(_item))
+            if (AreEqual(_arrayItem, _item))
             {
                 _index = i;
                 return true;
@@ -280,7 +280,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
             for (int j = 0; j < _segment.Length; j++)
             {
                 T _item = _segment[j];
-                bool _itemIsExisted = !ValueEqualsDefault(_item);
+                bool _itemIsExisted = !EqualsDefault(_item);
                 _segmentIsEmpty = !_itemIsExisted;
                 if (!_segmentIsEmpty)
                     break;
@@ -349,9 +349,21 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         return _index;
     }
 
-    private bool ValueEqualsDefault(object? _value)
+    private bool EqualsDefault(object? _value)
     {
-        return !(_value != null && !_value.Equals(default(T)));
+       return AreEqual(_value, default(T));
+    }
+
+    private bool AreEqual(object? o1, object? o2)
+    {
+        bool res = false;
+        if (o1 == null && o2 == null)
+            res = true;
+        else if (o1 == null || o2 == null)
+            res = false;
+        else
+            res = o1.Equals(o2);
+        return res;
     }
 
     public IEnumerator<T> GetEnumerator()
@@ -413,7 +425,8 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         int _index = -1;
         for (int i = 0; i < Length; i++)
         {
-            if ((object?)this[i] == (object?)_item)
+            T _arrayItem = this[i];
+            if (AreEqual(_arrayItem, _item))
             {
                 _index = i;
                 break;
@@ -496,12 +509,11 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         for (int i = 0; i < Length; i++)
         {
             var _arrayItem = this[i];
-            if (_arrayItem == null && _item == null)
-                return _index;
-            else if (_arrayItem == null || _item == null)
-                continue;
-            else if (_arrayItem != null && _arrayItem.Equals(_item))
-                return i;
+            if (AreEqual(_arrayItem, _item))
+            {
+                _index = i;
+                break;
+            }
         }
         return _index;
     }
