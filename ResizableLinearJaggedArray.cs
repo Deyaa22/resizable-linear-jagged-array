@@ -33,7 +33,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
     public readonly int SegmentLength;
 
-    public int NumberOfSegments { get { return array.Length; } }
+    public int TotalNumberOfSegments { get { return array.Length; } }
     /// <summary>
     /// Gets the number of segments that are null in memory.
     /// </summary>
@@ -98,10 +98,10 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
             else
             {
                 int _newNumberOfSegments = CalculateNumberOfSegments(_newLength);
-                if (_newNumberOfSegments != NumberOfSegments)
+                if (_newNumberOfSegments != TotalNumberOfSegments)
                 {
                     T[][] _newArray = new T[_newNumberOfSegments][];
-                    for (int _segmentIndex = 0; _segmentIndex < _newNumberOfSegments && _segmentIndex < NumberOfSegments; _segmentIndex++)
+                    for (int _segmentIndex = 0; _segmentIndex < _newNumberOfSegments && _segmentIndex < TotalNumberOfSegments; _segmentIndex++)
                     {
                         _newArray[_segmentIndex] = array[_segmentIndex];
                     }
