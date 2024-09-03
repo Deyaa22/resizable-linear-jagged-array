@@ -692,4 +692,102 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
         return _array;
     }
+
+    public object GetValue(long index)
+    {
+        if (index > int.MaxValue || index < int.MinValue)
+        {
+            throw new ArgumentOutOfRangeException("index", "Arrays larger than 2GB are not supported.");
+        }
+
+        return this.GetValue((int)index);
+    }
+
+    public object GetValue(long index1, long index2)
+    {
+        throw new NotSupportedException("RLJArray is just single-dimensional array.");
+    }
+
+    public object GetValue(long index1, long index2, long index3)
+    {
+        throw new NotSupportedException("RLJArray is just single-dimensional array.");
+    }
+
+    public object GetValue(params long[] indices)
+    {
+        if (indices == null)
+        {
+            throw new ArgumentNullException("indices");
+        }
+        if (indices.Length != this.Rank)
+        {
+            throw new ArgumentException("Indices length does not match the array rank.");
+        }
+
+        return this[(int)indices[0]];
+    }
+
+    public void SetValue(object value, long index)
+    {
+        if (index > int.MaxValue || index < int.MinValue)
+        {
+            throw new ArgumentOutOfRangeException("index", "Arrays larger than 2GB are not supported.");
+        }
+
+        this.SetValue(value, (int)index);
+    }
+
+    public void SetValue(object value, long index1, long index2)
+    {
+        throw new NotSupportedException("RLJArray is just single-dimensional array.");
+    }
+
+    public void SetValue(object value, long index1, long index2, long index3)
+    {
+        throw new NotSupportedException("RLJArray is just single-dimensional array.");
+    }
+
+    public void SetValue(object value, params long[] indices)
+    {
+        if (indices == null)
+        {
+            throw new ArgumentNullException("indices");
+        }
+        if (indices.Length != this.Rank)
+        {
+            throw new ArgumentException("Indices length does not match the array rank.");
+        }
+
+        this[(int)indices[0]] = (T) value;
+    }
+
+    public object GetValue(int index)
+    {
+        return this[index];
+    }
+
+    public object GetValue(int index1, int index2)
+    {
+        throw new NotSupportedException("RLJArray is just single-dimensional array.");
+    }
+
+    public object GetValue(int index1, int index2, int index3)
+    {
+        throw new NotSupportedException("RLJArray is just single-dimensional array.");
+    }
+
+    public void SetValue(object value, int index)
+    {
+        this[index] = (T) value;
+    }
+
+    public void SetValue(object value, int index1, int index2)
+    {
+        throw new NotSupportedException("RLJArray is just single-dimensional array.");
+    }
+
+    public void SetValue(object value, int index1, int index2, int index3)
+    {
+        throw new NotSupportedException("RLJArray is just single-dimensional array.");
+    }
 }
