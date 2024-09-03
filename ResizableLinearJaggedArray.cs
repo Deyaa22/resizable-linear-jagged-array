@@ -463,14 +463,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
     void IList<T>.Insert(int _index, T _item)
     {
-        ++Length;
-
-        for (int i = MaxIndex; i > _index; i--)
-        {
-            this[i] = this[i - 1];
-        }
-
-        this[_index] = _item;
+        (this as IList).Insert(_index, _item);
     }
 
     int IList.Add(object? _value)
