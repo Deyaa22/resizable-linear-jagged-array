@@ -158,9 +158,9 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
     public bool IsSynchronized { get { return false; } }
 
-    public object SyncRoot { get { return this; } }
-
     public bool IsFixedSize { get { return false; } }
+
+    public object SyncRoot { get { return this; } }
 
     public ResizableLinearJaggedArray(int _length = 0, int _segmentLength = 8)
     {
