@@ -162,8 +162,6 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
     public bool IsFixedSize { get { return false; } }
 
-    object? IList.this[int index] { get { return this[index]; } set { this[index] = (T)value; } }
-
     public ResizableLinearJaggedArray(int _length = 0, int _segmentLength = 8)
     {
         if (_length < 0)
@@ -214,6 +212,8 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
             array[_segmentIndex][_itemIndexAtSegment] = value;
         }
     }
+
+    object? IList.this[int index] { get { return this[index]; } set { this[index] = (T)value; } }
 
     /// <summary>
     /// Resizes the Length of array to a new length.
