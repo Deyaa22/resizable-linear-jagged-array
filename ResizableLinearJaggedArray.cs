@@ -576,7 +576,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         }
 
         Add((T)_value);
-        return Length - 1;
+        return MaxIndex;
     }
 
     void IList.Clear()
