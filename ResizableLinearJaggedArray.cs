@@ -150,7 +150,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         return (long)this.GetLength(_dimension);
     }
 
-    public int MaxIndex { get { return Length - 1; } }
+    private int MaxIndex { get { return Length - 1; } }
 
     /// <summary>
     /// Return  The last index [<see cref="MaxIndex"/>] in array.
