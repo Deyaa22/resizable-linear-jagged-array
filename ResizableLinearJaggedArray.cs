@@ -687,6 +687,9 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         return _array;
     }
 
+    /// <summary>
+    /// Initializes every element of the value-type System.Array by calling the parameterless constructor of the value type.
+    /// </summary>
     public void Initialize()
     {
         if (typeof(T).IsValueType && typeof(T).GetConstructor(Type.EmptyTypes) != null)
