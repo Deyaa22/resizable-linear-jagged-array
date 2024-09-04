@@ -479,7 +479,11 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
     public void CopyTo(Array _array, int _arrayIndex)
     {
-        if (array != null && array.Rank != 1)
+        if (_array == null)
+        {
+            throw new ArgumentNullException("array");
+        }
+        else if (_array.Rank != 1)
         {
             throw new ArgumentException("Only single dimensional arrays are supported for the requested action.");
         }
