@@ -473,7 +473,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         {
             throw new ArgumentNullException("array");
         }
-        else if (_array.Rank != 1)
+        else if (_array.Rank != Rank)
         {
             throw new ArgumentException("Only single dimensional arrays are supported for the requested action.");
         }
