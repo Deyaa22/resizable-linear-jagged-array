@@ -48,7 +48,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         get
         {
             int _counter = 0;
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < TotalNumberOfSegments; i++)
                 if (array[i] == null)
                     _counter++;
             return _counter;
@@ -65,7 +65,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         get
         {
             int _counter = 0;
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < TotalNumberOfSegments; i++)
             {
                 for (int j = 0; array[i] != null && j < array[i].Length; j++)
                 {
