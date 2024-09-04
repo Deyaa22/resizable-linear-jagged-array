@@ -448,17 +448,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     {
         for (int i = 0; i < Length; i++)
         {
-            int _segmentIndex = CalculateSegmentIndex(i);
-            int _itemIndex = CalculateItemIndexAtSegment(i);
-
-            if (array[_segmentIndex] != null)
-            {
-                yield return array[_segmentIndex][_itemIndex];
-            }
-            else
-            {
-                yield return default(T);
-            }
+            yield return this[i];
         }
     }
 
