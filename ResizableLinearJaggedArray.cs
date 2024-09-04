@@ -432,15 +432,15 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
        return AreEqual(_value, default(T));
     }
 
-    private bool AreEqual(object? o1, object? o2)
+    private bool AreEqual(object? _item1, object? _item2)
     {
         bool res = false;
-        if (o1 == null && o2 == null)
+        if (_item1 == null && _item2 == null)
             res = true;
-        else if (o1 == null || o2 == null)
+        else if (_item1 == null || _item2 == null)
             res = false;
         else
-            res = o1.Equals(o2);
+            res = _item1.Equals(_item2);
         return res;
     }
 
