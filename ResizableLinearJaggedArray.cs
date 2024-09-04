@@ -687,6 +687,17 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         return _array;
     }
 
+    public void Initialize()
+    {
+        if (typeof(T).IsValueType && typeof(T).GetConstructor(Type.EmptyTypes) != null)
+        {
+            for (int i = 0; i < Length; i++)
+            {
+                this[i] = (T)Activator.CreateInstance(typeof(T));
+            }
+        }
+    }
+
     public object GetValue(long index)
     {
         if (index > int.MaxValue || index < int.MinValue)
