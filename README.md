@@ -7,7 +7,7 @@ This class allows efficient resizing by managing segments, which are fixed-lengt
 To install the `ResizableLinearJaggedArray` package, use the following command in the NuGet Package Manager Console:
 
 ```bash
-dotnet add package Deyaa.ExDS.ResizableLinearJaggedArray --version 0.1.1
+dotnet add package Deyaa.ExDS.ResizableLinearJaggedArray --version 0.1.2
 ```
 
 Alternatively, you can add the package via the [NuGet Gallery](https://www.nuget.org/packages/Deyaa.ExDS.ResizableLinearJaggedArray) or your preferred package manager.
@@ -23,6 +23,7 @@ The array can be resized dynamically, with the ability to enlarge and shrink in 
 ---
 Here's a simple example of how to use `ResizableLinearJaggedArray<T>`:
 ```csharp
+using Deyaa.ExtensibleDataStructures.Generics;
 var array = new ResizableLinearJaggedArray<int>(10, 5); // Initialize with length 10 and segment length 5
 array[0] = 1;
 array.Add(2);
