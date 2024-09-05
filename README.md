@@ -2,6 +2,11 @@
 `ResizableLinearJaggedArray<T>` is a generic, resizable linear array with an internal jagged array structure, designed to provide Big-Oh(1) time complexity for item access as it is with the normal array.
 This class allows efficient resizing by managing segments, which are fixed-length sub-arrays, and avoids the allocation of space for empty segments.
 
+### CAUTION:
+---
+Package is fresh-made, So,
+Tests so far gives the advantages of array and list over RLJArray in most cases, SO keep looking here for new updates.
+
 ### Installation
 ---
 To install the `ResizableLinearJaggedArray` package, use the following command in the NuGet Package Manager Console:
