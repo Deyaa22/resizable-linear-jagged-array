@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace ExtensibleDataStructures.Generics;
+namespace Deyaa.ExtensibleDataStructures.Generics;
 
 /// <summary>
 /// RLJArray: A generic resizable linear array with a jagged array as internal structure,
