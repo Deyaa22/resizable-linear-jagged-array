@@ -4,6 +4,24 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>Deyaa.ExDS.RLJArray</Title>
+    <Version>0.1.0</Version>
+    <Authors>Deyaa El-Deen</Authors>
+    <Product>ExtensibleDataStructures.ResizableLinearJaggedArray</Product>
+    <Description>ResizableLinearJaggedArray&lt;T&gt; is a generic, resizable linear array with an internal jagged array structure, designed to provide Big-Oh(1) time complexity for item access as it is with the normal array. This class allows efficient resizing by managing segments, which are fixed-length sub-arrays, and avoids the allocation of space for empty segments.</Description>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/Deyaa22/resizable-linear-jagged-array</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Company>Deyaa El-Deen</Company>
+    <AnalysisLevel>preview-all</AnalysisLevel>
+    <PackageId>Deyaa.ExDS.ResizableLinearJaggedArray</PackageId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
