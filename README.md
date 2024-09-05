@@ -88,7 +88,7 @@ rLArray.Resize(_newLength: 2); // { 1, 1 }
 rLArray.Resize(_newLength: 24); // { 1, 1, 0, ...., 0 }
 Console.WriteLine(rLArray.NumberOfNullSegments); // 2
 // 2 segments are null,
-// which means saving (64) bytes = 4 bytes [int32] * 2 segments * 8 [default segment length] - 8 bytes [segment reference address in 64-bit systems, [4 bytes for 32-bit]]
+// which means saving (56) bytes = 4 bytes [int32] * 2 segments * 8 [default segment length] - 8 bytes [segment reference address in 64-bit systems, [4 bytes for 32-bit]]
 
 // Note: when segment get allocated, there will be an overhead foreach segment as follows:
 // 20 bytes for 64-bit systems
