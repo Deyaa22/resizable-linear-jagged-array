@@ -2,6 +2,16 @@
 `ResizableLinearJaggedArray<T>` is a generic, resizable linear array with an internal jagged array structure, designed to provide Big-Oh(1) time complexity for item access as it is with the normal array.
 This class allows efficient resizing by managing segments, which are fixed-length sub-arrays, and avoids the allocation of space for empty segments.
 
+### Installation
+---
+To install the `ResizableLinearJaggedArray` package, use the following command in the NuGet Package Manager Console:
+
+```bash
+dotnet add package Deyaa.ExDS.ResizableLinearJaggedArray --version 0.1.1
+```
+
+Alternatively, you can add the package via the [NuGet Gallery](https://www.nuget.org/packages/Deyaa.ExDS.ResizableLinearJaggedArray) or your preferred package manager.
+
 ### How It Works
 ---
 Unlike standard C# `Array` or `List<T>`, `RLJArray` is divided into segments that represent contiguous items.
