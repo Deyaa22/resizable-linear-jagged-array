@@ -678,7 +678,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     /// </returns>
     public object Clone()
     {
-        ResizableLinearJaggedArray<T> _array = new ResizableLinearJaggedArray<T>(Length);
+        ResizableLinearJaggedArray<T> _array = new ResizableLinearJaggedArray<T>(Length, SegmentLength);
         for (int i = 0; i < Length; i++)
         {
             _array[i] = this[i];
