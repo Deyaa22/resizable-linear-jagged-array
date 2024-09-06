@@ -264,7 +264,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     /// </summary>
     /// <param name="_size"></param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public void ShrinkBySize(int _size)
+    public void Shrink(int _size)
     {
         if (_size < 0)
             throw new ArgumentOutOfRangeException("Can't shrink array with minus number.");
@@ -526,7 +526,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         {
             this[i] = this[i + 1];
         }
-        ShrinkBySize(1);
+        Shrink(1);
 
         return true;
     }
@@ -554,7 +554,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         {
             this[i] = this[i + 1];
         }
-        ShrinkBySize(1);
+        Shrink(1);
     }
 
     int IList<T>.IndexOf(T _item)
