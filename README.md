@@ -131,8 +131,8 @@ var array2 = new ResizableLinearJaggedArray<int>(_length: 16, _segmentLength: 16
 ---
 RLJArray is designed to act like a single-dimensional array, not List<T>.
 Add and Remove methods are added because of implementing ICollection interface,
-And for that I kept Remove method callable,
-I kept Add method puplic for collection initializer. 
+And for that I kept Remove method callable using explicit interface implementation, and not directly callable from the class instance."
+I kept Add method puplic for collection initializer.
 
 ### Mathematical background
 ---
