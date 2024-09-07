@@ -12,10 +12,10 @@ namespace Deyaa.ExtensibleDataStructures.Generics;
 /// 
 /// RLJArray gives the ability to enlarge and shrink the array as needed.
 /// 
-/// Segment is conceptual term which expresses a contiguous elements in memory with fixed size similar to a standard array.
+/// Segment is a conceptual term which expresses a contiguous elements in memory with fixed size similar to a standard array.
 /// 
 /// Technically, a segment is a sub array with a fixed length,
-/// but it remains null until at least one element is assigned.
+/// but it remains null until at least one element gets assigned.
 /// 
 /// The nullability of segments does not affect data retrieval,
 /// Accessing elements returns the default value; if the segment is null,
