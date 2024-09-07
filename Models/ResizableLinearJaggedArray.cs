@@ -260,19 +260,19 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     }
 
     /// <summary>
-    /// Decrements length of array by size.
+    /// Decrements length of array by amount.
     /// </summary>
-    /// <param name="_size"></param>
+    /// <param name="_amount"></param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public void Shrink(int _size)
+    public void Shrink(int _amount)
     {
-        if (_size < 0)
+        if (_amount < 0)
             throw new ArgumentOutOfRangeException("Can't shrink array with minus number.");
 
-        if (_size > Length)
+        if (_amount > Length)
             throw new ArgumentOutOfRangeException("Can't shrink array more than its actual length.");
 
-        Resize(Length - _size);
+        Resize(Length - _amount);
     }
 
     public bool Contains(object? _item, out int _index)
