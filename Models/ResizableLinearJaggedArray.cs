@@ -247,16 +247,16 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     }
 
     /// <summary>
-    /// Increments length of array by size.
+    /// Increments length of array by amount.
     /// </summary>
-    /// <param name="_size"></param>
+    /// <param name="_amount"></param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public void Enlarge(int _size)
+    public void Enlarge(int _amount)
     {
-        if (_size < 0)
+        if (_amount < 0)
             throw new ArgumentOutOfRangeException("Can't enlarge array with minus number.");
 
-        Resize(Length + _size);
+        Resize(Length + _amount);
     }
 
     /// <summary>
