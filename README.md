@@ -29,11 +29,11 @@ The array can be resized dynamically, with the ability to enlarge and shrink in 
 Here's a simple example of how to use `ResizableLinearJaggedArray<T>`:
 ```csharp
 using Deyaa.ExtensibleDataStructures.Generics;
-var array = new ResizableLinearJaggedArray<int>(10, 5); // Initialize with length 10 and segment length 5
+var array = new ResizableLinearJaggedArray<int>(_length: _10, _segmentLength: _5); // Initialize with length 10 and segment length 5
 array[0] = 1;
-array.Add(2);
-array.EnglargeBySize(5);
-array.ShrinkBySize(3);
+array.Add(_item: _2);
+array.Englarge(_amount: _5);
+array.Shrink(_amount: _3);
 ```
 
 ### Key Features
