@@ -251,7 +251,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     /// </summary>
     /// <param name="_size"></param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public void EnglargeBySize(int _size)
+    public void Enlarge(int _size)
     {
         if (_size < 0)
             throw new ArgumentOutOfRangeException("Can't enlarge array with minus number.");
