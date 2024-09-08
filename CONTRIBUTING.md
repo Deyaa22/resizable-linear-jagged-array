@@ -8,6 +8,9 @@ Create and submit issue [optional - recommended] - Fork - Clone - New Branch - C
 
 ## Coding Standards
 
+### Array-Like
+Make sure any method should be acting exactly like array, So, explicit interface implementation differs from public.
+
 ### Naming Conventions
 
 1. **Classes**: Use PascalCase for class names.
@@ -65,7 +68,7 @@ If you find a bug or have a feature request, please [open an issue](https://gith
 
 ## Contact
 
-For questions or further discussion, contact me on whatsapp [+972593221082].
+For questions or further discussion, contact me on gmail [deyaa2omer@gmail.com], whatsapp [+972593221082].
 
 Thank you for contributing to [resizable-linear-jagged-array]!
 
