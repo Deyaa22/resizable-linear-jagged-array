@@ -798,4 +798,9 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     {
         throw new NotSupportedException("RLJArray is just single-dimensional array.");
     }
+
+    private class Constants
+    {
+        private Constants () { }
+    }
 }
