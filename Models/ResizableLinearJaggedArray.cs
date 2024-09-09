@@ -802,5 +802,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     private class Constants
     {
         private Constants () { }
+
+        public const string RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY = "RLJArray is just single-dimensional array.";
     }
 }
