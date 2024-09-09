@@ -713,12 +713,12 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
     public object GetValue(long index1, long index2)
     {
-        throw new NotSupportedException("RLJArray is just single-dimensional array.");
+        throw new NotSupportedException(Constants.RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY);
     }
 
     public object GetValue(long _index1, long _index2, long _index3)
     {
-        throw new NotSupportedException("RLJArray is just single-dimensional array.");
+        throw new NotSupportedException(Constants.RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY);
     }
 
     public object GetValue(params long[] _indices)
@@ -747,12 +747,12 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
     public void SetValue(object _value, long _index1, long _index2)
     {
-        throw new NotSupportedException("RLJArray is just single-dimensional array.");
+        throw new NotSupportedException(Constants.RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY);
     }
 
     public void SetValue(object _value, long _index1, long _index2, long _index3)
     {
-        throw new NotSupportedException("RLJArray is just single-dimensional array.");
+        throw new NotSupportedException(Constants.RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY);
     }
 
     public void SetValue(object _value, params long[] _indices)
@@ -776,12 +776,12 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
     public object GetValue(int _index1, int _index2)
     {
-        throw new NotSupportedException("RLJArray is just single-dimensional array.");
+        throw new NotSupportedException(Constants.RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY);
     }
 
     public object GetValue(int _index1, int _index2, int _index3)
     {
-        throw new NotSupportedException("RLJArray is just single-dimensional array.");
+        throw new NotSupportedException(Constants.RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY);
     }
 
     public void SetValue(object _value, int _index)
@@ -791,12 +791,12 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
     public void SetValue(object _value, int _index1, int _index2)
     {
-        throw new NotSupportedException("RLJArray is just single-dimensional array.");
+        throw new NotSupportedException(Constants.RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY);
     }
 
     public void SetValue(object _value, int _index1, int _index2, int _index3)
     {
-        throw new NotSupportedException("RLJArray is just single-dimensional array.");
+        throw new NotSupportedException(Constants.RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY);
     }
 
     private class Constants
