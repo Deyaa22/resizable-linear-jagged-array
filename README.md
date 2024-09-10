@@ -127,7 +127,7 @@ var array2 = new ResizableLinearJaggedArray<int>(_length: 16, _segmentLength: 16
 
 **Recommendation:** Choose segment length based on expected usage patterns and memory efficiency requirements. For most use cases, a balanced segment length (e.g., 8 to 16) provides a good trade-off.
 
-## Add & Remove methods
+### Add & Remove methods
 ---
 RLJArray is designed to act like a single-dimensional array, not List<T>.
 Add and Remove methods are added because of implementing ICollection interface,
