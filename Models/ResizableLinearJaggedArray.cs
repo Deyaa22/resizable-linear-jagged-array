@@ -501,7 +501,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     {
         if (_index > int.MaxValue || _index < int.MinValue)
         {
-            throw new ArgumentOutOfRangeException("index", "Arrays larger than 2GB are not supported.");
+            throw new ArgumentOutOfRangeException("index", ARRAY_2GB_IS_NOT_SUPPORTED);
         }
         this.CopyTo(_array, (int)_index);
     }
@@ -705,7 +705,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     {
         if (index > int.MaxValue || index < int.MinValue)
         {
-            throw new ArgumentOutOfRangeException("index", "Arrays larger than 2GB are not supported.");
+            throw new ArgumentOutOfRangeException("index", ARRAY_2GB_IS_NOT_SUPPORTED);
         }
 
         return this.GetValue((int)index);
@@ -739,7 +739,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     {
         if (_index > int.MaxValue || _index < int.MinValue)
         {
-            throw new ArgumentOutOfRangeException("index", "Arrays larger than 2GB are not supported.");
+            throw new ArgumentOutOfRangeException("index", ARRAY_2GB_IS_NOT_SUPPORTED);
         }
 
         this.SetValue(_value, (int)_index);
@@ -804,5 +804,6 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         private Constants () { }
 
         public const string RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY = "RLJArray is just single-dimensional array.";
+        public const string ARRAY_2GB_IS_NOT_SUPPORTED = "Arrays larger than 2GB are not supported.";
     }
 }
