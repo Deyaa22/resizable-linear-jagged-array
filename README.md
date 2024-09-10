@@ -32,7 +32,7 @@ using Deyaa.ExtensibleDataStructures.Generics;
 var array = new ResizableLinearJaggedArray<int>(_length: _10, _segmentLength: _5); // Initialize with length 10 and segment length 5
 array[0] = 1;
 array.Add(_item: _2);
-array.Englarge(_amount: _5);
+array.Enlarge(_amount: _5);
 array.Shrink(_amount: _3);
 ```
 
