@@ -19,8 +19,8 @@ Make sure any method should be acting exactly like array, So, explicit interface
 2. **Methods**: Use PascalCase for method names.
    - Example: `DoPayment()`
 
-3. **Variables**: Use camelCase for variable names.
-   - Example: `itemCount`
+3. **Variables**: Use _camelCase for variable names.
+   - Example: `_itemCount`
   
 4. **Properties**: Use PascalCase for Properties names.
 - Example: `Length`
@@ -28,17 +28,17 @@ Make sure any method should be acting exactly like array, So, explicit interface
 5. **Readonly variables**: Use PascalCase for Properties names.
 - Example: `Length`
  
-6. **Constants**: Use UPPER_CASE with underscores for constant values.
+6. **Constants**: Use UPPER_CASE for constant values.
    - Example: `MAX_SEGMENT_SIZE`
 
-7. **Parameters**: Use camelCase with initial underscore for method parameters.
-   - Example: `_newLength`
+7. **Parameters**: Use camelCase for method parameters.
+   - Example: `newLength`
 
-7. **Local variables**: Use camelCase with initial underscore for method parameters.
-   - Example: `_index`
+7. **Local variables**: Use camelCase for method parameters.
+   - Example: `index`
 
 6. **Namespaces**: Use PascalCase for namespaces.
-   - Example: `MyProject.DataStructures`
+   - Example: `Deyaa.Collections.Generics`
 
 7. **Interfaces**: Use PascalCase with an “I” prefix for interfaces.
    - Example: `IResizableArray`
