@@ -47,13 +47,14 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
     {
         get
         {
-            int _counter = 0;
+            int counter = 0;
             for (int i = 0; i < TotalNumberOfSegments; i++)
                 if (array[i] == null)
-                    _counter++;
-            return _counter;
+                    counter++;
+            return counter;
         }
     }
+
     /// <summary>
     /// Gets the number of segments that contain only default values in memory, but are not null.
     /// </summary>
@@ -64,7 +65,7 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
     {
         get
         {
-            int _counter = 0;
+            int counter = 0;
             for (int i = 0; i < TotalNumberOfSegments; i++)
             {
                 for (int j = 0; array[i] != null && j < array[i].Length; j++)
@@ -73,10 +74,10 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
                         break;
 
                     if (j == SegmentLength - 1)
-                        _counter++;
+                        counter++;
                 }
             }
-            return _counter;
+            return counter;
         }
     }
 
@@ -84,60 +85,62 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
     public int Length
     {
         get { return length; }
-        private set 
+        private set
         {
-            int _newLength = value;
+            int newLength = value;
 
-            if (_newLength < 0)
+            if (newLength < 0)
                 throw new ArgumentOutOfRangeException("New length can't be less than zero.");
 
-            if (_newLength == Length)
+            if (newLength == Length)
                 return;
 
-            if (_newLength == 0)
+            if (newLength == 0)
             {
                 array = new T[0][];
             }
             else
             {
-                int _newNumberOfSegments = CalculateNumberOfSegments(_newLength);
-                if (_newNumberOfSegments != TotalNumberOfSegments)
+                int newNumberOfSegments = CalculateNumberOfSegments(newLength);
+                if (newNumberOfSegments != TotalNumberOfSegments)
                 {
-                    T[][] _newArray = new T[_newNumberOfSegments][];
-                    for (int _segmentIndex = 0; _segmentIndex < _newNumberOfSegments && _segmentIndex < TotalNumberOfSegments; _segmentIndex++)
+                    T[][] newArray = new T[newNumberOfSegments][];
+                    for (int segmentIndex = 0; segmentIndex < newNumberOfSegments && segmentIndex < TotalNumberOfSegments; segmentIndex++)
                     {
-                        _newArray[_segmentIndex] = array[_segmentIndex];
+                        newArray[segmentIndex] = array[segmentIndex];
                     }
-                    array = _newArray;
+                    array = newArray;
                 }
 
-                if (_newLength < Length)
+                if (newLength < Length)
                 {
-                    int _segmentIndex = CalculateSegmentIndex(_newLength - 1);
-                    int _itemIndex = CalculateItemIndexAtSegment(_newLength - 1);
-                    T[] _segment = null;
-                    if (array[_segmentIndex] != null)
+                    int segmentIndex = CalculateSegmentIndex(newLength - 1);
+                    int itemIndex = CalculateItemIndexAtSegment(newLength - 1);
+                    T[] segment = null;
+                    if (array[segmentIndex] != null)
                     {
-                        _segment = array[_segmentIndex];
+                        segment = array[segmentIndex];
 
-                        for (int i = _itemIndex + 1; i < SegmentLength; i++)
+                        for (int i = itemIndex + 1; i < SegmentLength; i++)
                         {
-                            _segment[i] = default(T);
+                            segment[i] = default(T);
                         }
                     }
                 }
             }
 
-            length = _newLength;
+            length = newLength;
         }
     }
-    public int GetLength(int _dimension = 0)
+
+    public int GetLength(int dimension = 0)
     {
-        if(_dimension != 0)
-            throw new ArgumentOutOfRangeException("RLJArray acts like a normal linear array, RLJArray doesn't support multiple dimentions");
+        if (dimension != 0)
+            throw new ArgumentOutOfRangeException("RLJArray acts like a normal linear array, RLJArray doesn't support multiple dimensions");
 
         return Length;
     }
+
     public long LongLength
     {
         get
@@ -145,23 +148,25 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
             return (long)this.GetLength();
         }
     }
-    public long GetLongLength(int _dimension = 0)
+
+    public long GetLongLength(int dimension = 0)
     {
-        return (long)this.GetLength(_dimension);
+        return (long)this.GetLength(dimension);
     }
+
 
     private int MaxIndex { get { return Length - 1; } }
 
     /// <summary>
     /// Return  The last index [<see cref="MaxIndex"/>] in array.
     /// </summary>
-    /// <param name="_dimension"></param>
+    /// <param name="dimension"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown when non zero value entered for <param name="_dimension"></param>.</exception>
-    public int GetUpperBound(int _dimension = 0)
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when non zero value entered for <param name="dimension"></param>.</exception>
+    public int GetUpperBound(int dimension = 0)
     {
-        if (_dimension != 0)
-            throw new ArgumentOutOfRangeException("RLJArray acts like a normal linear array, RLJArray doesn't support multiple dimentions");
+        if (dimension != 0)
+            throw new ArgumentOutOfRangeException("RLJArray acts like a normal linear array, RLJArray doesn't support multiple dimensions");
 
         return MaxIndex;
     }
@@ -176,114 +181,114 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
 
     public object SyncRoot { get { return this; } }
 
-    public RLJArray(int _length = 0, int _segmentLength = 8)
+    public RLJArray(int length = 0, int segmentLength = 8)
     {
-        if (_length < 0)
+        if (length < 0)
             throw new ArgumentOutOfRangeException("Length of array can't be less than zero.");
 
-        if (_segmentLength <= 0)
+        if (segmentLength <= 0)
             throw new ArgumentOutOfRangeException("Segment length can't be zero nor less.");
 
-        SegmentLength = _segmentLength;
-        int _numberOfSegment = CalculateNumberOfSegments(_length);
-        array = new T[_numberOfSegment][];
-        Resize(_length);
+        SegmentLength = segmentLength;
+        int numberOfSegment = CalculateNumberOfSegments(length);
+        array = new T[numberOfSegment][];
+        Resize(length);
     }
 
-    public T this[int _index]
+    public T this[int index]
     {
         get
         {
-            if (_index >= Length || _index < 0)
+            if (index >= Length || index < 0)
                 throw new IndexOutOfRangeException();
 
-            T _item = default(T);
+            T item = default(T);
 
-            int _segmentIndex = CalculateSegmentIndex(_index);
-            int _itemIndexAtSegment = CalculateItemIndexAtSegment(_index);
+            int segmentIndex = CalculateSegmentIndex(index);
+            int itemIndexAtSegment = CalculateItemIndexAtSegment(index);
 
-            if (array[_segmentIndex] != null)
-                _item = array[_segmentIndex][_itemIndexAtSegment];
+            if (array[segmentIndex] != null)
+                item = array[segmentIndex][itemIndexAtSegment];
 
-            return _item;
+            return item;
         }
         set
         {
-            if (_index >= Length || _index < 0)
+            if (index >= Length || index < 0)
                 throw new IndexOutOfRangeException();
 
-            int _segmentIndex = CalculateSegmentIndex(_index);
-            int _itemIndexAtSegment = CalculateItemIndexAtSegment(_index);
+            int segmentIndex = CalculateSegmentIndex(index);
+            int itemIndexAtSegment = CalculateItemIndexAtSegment(index);
 
-            if(array[_segmentIndex] == null)
+            if (array[segmentIndex] == null)
             {
                 if (EqualsDefault(value))
                     return;
                 else
-                    array[_segmentIndex] = new T[SegmentLength];
+                    array[segmentIndex] = new T[SegmentLength];
             }
 
-            array[_segmentIndex][_itemIndexAtSegment] = value;
+            array[segmentIndex][itemIndexAtSegment] = value;
         }
     }
 
-    object? IList.this[int _index] { get { return this[_index]; } set { this[_index] = (T)value; } }
+    object? IList.this[int index] { get { return this[index]; } set { this[index] = (T)value; } }
 
     /// <summary>
     /// Resizes the Length of array to a new length.
     /// </summary>
-    /// <param name="_newLength">
+    /// <param name="newLength">
     /// The new length of the array.
     /// </param>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// Thrown [indside Length] when the specified new length is less than zero.
+    /// Thrown [inside Length] when the specified new length is less than zero.
     /// </exception>
     /// <remarks>
     ///     <b>Warning:</b> Resizing to a smaller length will result in the deletion of data at higher truncated indexes.
     /// </remarks>
-    public void Resize(int _newLength)
+    public void Resize(int newLength)
     {
-        Length = _newLength;
+        Length = newLength;
     }
 
     /// <summary>
     /// Increments length of array by amount.
     /// </summary>
-    /// <param name="_amount"></param>
+    /// <param name="amount"></param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public void Enlarge(int _amount)
+    public void Enlarge(int amount)
     {
-        if (_amount < 0)
+        if (amount < 0)
             throw new ArgumentOutOfRangeException("Can't enlarge array with minus number.");
 
-        Resize(Length + _amount);
+        Resize(Length + amount);
     }
 
     /// <summary>
     /// Decrements length of array by amount.
     /// </summary>
-    /// <param name="_amount"></param>
+    /// <param name="amount"></param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public void Shrink(int _amount)
+    public void Shrink(int amount)
     {
-        if (_amount < 0)
+        if (amount < 0)
             throw new ArgumentOutOfRangeException("Can't shrink array with minus number.");
 
-        if (_amount > Length)
+        if (amount > Length)
             throw new ArgumentOutOfRangeException("Can't shrink array more than its actual length.");
 
-        Resize(Length - _amount);
+        Resize(Length - amount);
     }
 
-    public bool Contains(object? _item, out int _index)
+    public bool Contains(object? item, out int index)
     {
-        _index = -1;
+        index = -1;
         for (int i = 0; i < Length; i++)
         {
-            var _arrayItem = this[i] as object;
-            if (AreEqual(_arrayItem, _item))
+            var arrayItem = this[i] as object;
+            if (AreEqual(arrayItem, item))
             {
-                _index = i;
+                index = i;
                 return true;
             }
         }
@@ -295,14 +300,14 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
     /// Adds new item on top of array,
     /// Method increments length by one.
     /// </summary>
-    /// <param name="_item"></param>
+    /// <param name="item"></param>
     /// <remarks>
     ///     <b>Warning:</b> For adding items repeatedly, It's better to resize the array, then assign items.
     /// </remarks>
-    public void Add(T _item)
+    public void Add(T item)
     {
         Resize(Length + 1);
-        this[MaxIndex] = _item;
+        this[MaxIndex] = item;
     }
 
     /// <summary>
@@ -317,121 +322,148 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
     }
 
     /// <summary>
-    /// Cleanes array from empty segments within given rang.
+    /// Cleanes array from empty segments within given range.
     /// </summary>
-    /// <param name="_startIndex"></param>
-    /// <param name="_amount"></param>
+    /// <param name="startIndex"></param>
+    /// <param name="amount"></param>
     /// <exception cref="InvalidOperationException"></exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public void CleanEmptySegments(int _startIndex, int _amount)
+    public void CleanEmptySegments(int startIndex, int amount)
     {
         if (Length == 0)
             throw new InvalidOperationException("Length of array is 0, Can't operate on an empty array.");
 
-        if (_startIndex < 0 || _startIndex >= Length || _amount < 0)
+        if (startIndex < 0 || startIndex >= Length || amount < 0)
             throw new ArgumentOutOfRangeException("length");
 
-        if (_amount == 0)
+        if (amount == 0)
             return;
 
-        int _endIndex = _startIndex + _amount - 1;
-        if (!IsFirstIndexInSegment(_startIndex))
+        int endIndex = startIndex + amount - 1;
+        if (!IsFirstIndexInSegment(startIndex))
         {
-            _startIndex = GetFirstIndexOfNextSegment(_endIndex);
+            startIndex = GetFirstIndexOfNextSegment(endIndex);
         }
 
-        if (!IsLastIndexInSegment(_endIndex))
+        if (!IsLastIndexInSegment(endIndex))
         {
-            _endIndex = GetLastIndexOfPreviousSegment(_endIndex);
+            endIndex = GetLastIndexOfPreviousSegment(endIndex);
         }
 
-        int _startSegmentIndex = CalculateSegmentIndex(_startIndex);
-        int _endSegmentIndex = CalculateSegmentIndex(_endIndex);
+        int startSegmentIndex = CalculateSegmentIndex(startIndex);
+        int endSegmentIndex = CalculateSegmentIndex(endIndex);
 
-        for (int i = _startSegmentIndex; i <= _endSegmentIndex; i++)
+        for (int i = startSegmentIndex; i <= endSegmentIndex; i++)
         {
-            T[] _segment = array[i];
-            if (_segment == null)
+            T[] segment = array[i];
+            if (segment == null)
                 continue;
 
-            bool _segmentIsEmpty = true;
-            for (int j = 0; j < _segment.Length; j++)
+            bool segmentIsEmpty = true;
+            for (int j = 0; j < segment.Length; j++)
             {
-                T _item = _segment[j];
-                bool _itemIsExisted = !EqualsDefault(_item);
-                _segmentIsEmpty = !_itemIsExisted;
-                if (!_segmentIsEmpty)
+                T item = segment[j];
+                bool itemIsExisted = !EqualsDefault(item);
+                segmentIsEmpty = !itemIsExisted;
+                if (!segmentIsEmpty)
                     break;
             }
 
-            if (_segmentIsEmpty)
+            if (segmentIsEmpty)
                 array[i] = null;
         }
     }
-
     /// <summary>
     /// Calculates the number of segments required to hold a given number of items.
     /// </summary>
-    /// <param name="_length">The total number of items that should be hold in segments.</param>
+    /// <param name="length">The total number of items to be held in segments.</param>
     /// <returns>The number of segments needed.</returns>
-    private int CalculateNumberOfSegments(int _length)
+    private int CalculateNumberOfSegments(int length)
     {
-        if (_length == 0)
+        if (length == 0)
             return 0;
 
-        int _maxIndex = _length - 1;
-        int _maxSegmentIndex = CalculateSegmentIndex(_maxIndex);
-        int _numberOfSegments = _maxSegmentIndex + 1;
-        return _numberOfSegments;
+        int maxIndex = length - 1;
+        int maxSegmentIndex = CalculateSegmentIndex(maxIndex);
+        return maxSegmentIndex + 1;
     }
 
     /// <summary>
-    /// Calculates the index of a segment which holds index"
+    /// Calculates the index of the segment that holds the given index.
     /// </summary>
-    /// <param name="_index">The index wich should be contained in a segment.</param>
-    private int CalculateSegmentIndex(int _index)
+    /// <param name="index">The index to be contained in a segment.</param>
+    private int CalculateSegmentIndex(int index)
     {
-        return _index / SegmentLength;
+        return index / SegmentLength;
     }
 
     /// <summary>
-    /// Calculate the index in segment using the given item index.
+    /// Calculates the index within the segment using the given item index.
     /// </summary>
-    /// <param name="_index">The index in the array.</param>
-    private int CalculateItemIndexAtSegment(int _index)
+    /// <param name="index">The index in the array.</param>
+    private int CalculateItemIndexAtSegment(int index)
     {
-        return _index % SegmentLength;
+        return index % SegmentLength;
     }
 
-    public bool IsFirstIndexInSegment(int _index)
+    /// <summary>
+    /// Determines whether the given index is the first index in a segment.
+    /// </summary>
+    /// <param name="index">The index to check.</param>
+    /// <returns>True if the index is the first index in a segment, otherwise false.</returns>
+    public bool IsFirstIndexInSegment(int index)
     {
-        return _index % SegmentLength == 0;
+        return index % SegmentLength == 0;
     }
 
-    public bool IsLastIndexInSegment(int _index)
+    /// <summary>
+    /// Determines whether the given index is the last index in a segment.
+    /// </summary>
+    /// <param name="index">The index to check.</param>
+    /// <returns>True if the index is the last index in a segment, otherwise false.</returns>
+    public bool IsLastIndexInSegment(int index)
     {
-        return _index % SegmentLength == SegmentLength - 1;
+        return index % SegmentLength == SegmentLength - 1;
     }
 
-    public int GetFirstIndexOfNextSegment(int _index)
+    /// <summary>
+    /// Returns the first index of the next segment.
+    /// </summary>
+    /// <param name="index">The current index.</param>
+    /// <returns>The first index of the next segment.</returns>
+    public int GetFirstIndexOfNextSegment(int index)
     {
-        int _length = _index + 1;
-        _index = CalculateNumberOfSegments(_length) * SegmentLength;
-        return _index;
+        int length = index + 1;
+        return CalculateNumberOfSegments(length) * SegmentLength;
     }
 
-    public int GetLastIndexOfPreviousSegment(int _index)
+    /// <summary>
+    /// Returns the last index of the previous segment.
+    /// </summary>
+    /// <param name="index">The current index.</param>
+    /// <returns>The last index of the previous segment.</returns>
+    public int GetLastIndexOfPreviousSegment(int index)
     {
-        int _length = _index + 1;
-        _index = ((CalculateNumberOfSegments(_length) - 1) * SegmentLength) - 1;
-        return _index;
+        int length = index + 1;
+        return ((CalculateNumberOfSegments(length) - 1) * SegmentLength) - 1;
     }
 
-    private bool EqualsDefault(object? _value)
+    /// <summary>
+    /// Checks if the given value is equal to the default value of the type.
+    /// </summary>
+    /// <param name="value">The value to compare.</param>
+    /// <returns>True if the value is equal to the default value of the type, otherwise false.</returns>
+    private bool EqualsDefault(object? value)
     {
-       return AreEqual(_value, default(T));
+        return AreEqual(value, default(T));
     }
 
+    /// <summary>
+    /// Compares two objects for equality.
+    /// </summary>
+    /// <param name="item1">The first object.</param>
+    /// <param name="item2">The second object.</param>
+    /// <returns>True if the objects are equal, otherwise false.</returns>
     private bool AreEqual(object? _item1, object? _item2)
     {
         bool res = false;
@@ -444,6 +476,10 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
         return res;
     }
 
+    /// <summary>
+    /// Gets an enumerator to iterate over the collection.
+    /// </summary>
+    /// <returns>An enumerator for the collection.</returns>
     public IEnumerator<T> GetEnumerator()
     {
         for (int i = 0; i < Length; i++)
@@ -457,212 +493,278 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
         return (this as IEnumerable).GetEnumerator();
     }
 
+    /// <summary>
+    /// Clears the collection.
+    /// </summary>
     void ICollection<T>.Clear()
     {
         Resize(0);
     }
 
-    bool ICollection<T>.Contains(T _item)
+    /// <summary>
+    /// Checks if the collection contains a specific item.
+    /// </summary>
+    /// <param name="item">The item to check.</param>
+    /// <returns>True if the item is found, otherwise false.</returns>
+    bool ICollection<T>.Contains(T item)
     {
-        return Contains(_item, out _);
+        return Contains(item, out _);
     }
 
-    public void CopyTo(Array _array, int _arrayIndex)
+    /// <summary>
+    /// Copies the collection to the specified array starting at the specified index.
+    /// </summary>
+    /// <param name="array">The destination array.</param>
+    /// <param name="arrayIndex">The index to start copying at.</param>
+    public void CopyTo(Array array, int arrayIndex)
     {
-        if (_array == null)
-        {
-            throw new ArgumentNullException("array");
-        }
-        else if (_array.Rank != Rank)
-        {
+        if (array == null)
+            throw new ArgumentNullException(nameof(array));
+        if (array.Rank != Rank)
             throw new ArgumentException("Only single dimensional arrays are supported for the requested action.");
-        }
 
-        for (int i = _arrayIndex; i < _array.Length && i < Length; i++)
+        for (int i = arrayIndex; i < array.Length && i < Length; i++)
         {
-            _array.SetValue(this[i], i);
+            array.SetValue(this[i], i);
         }
     }
 
-    public void CopyTo(T[] _array, int _arrayIndex)
+    /// <summary>
+    /// Copies the collection to the specified array starting at the specified index.
+    /// </summary>
+    /// <param name="array">The destination array.</param>
+    /// <param name="arrayIndex">The index to start copying at.</param>
+    public void CopyTo(T[] array, int arrayIndex)
     {
-        CopyTo((Array) _array, _arrayIndex);
+        CopyTo((Array)array, arrayIndex);
     }
 
-    public void CopyTo(RLJArray<T> _array, int _arrayIndex)
+    /// <summary>
+    /// Copies the collection to the specified RLJArray starting at the specified index.
+    /// </summary>
+    /// <param name="array">The destination RLJArray.</param>
+    /// <param name="arrayIndex">The index to start copying at.</param>
+    public void CopyTo(RLJArray<T> array, int arrayIndex)
     {
-        for (int i = _arrayIndex; i < _array.Length && i < Length; i++)
+        for (int i = arrayIndex; i < array.Length && i < Length; i++)
         {
-            _array[i] = this[i];
+            array[i] = this[i];
         }
     }
 
-    public void CopyTo(Array _array, long _index)
+    /// <summary>
+    /// Copies the collection to the specified array starting at the specified index.
+    /// </summary>
+    /// <param name="array">The destination array.</param>
+    /// <param name="index">The starting index.</param>
+    public void CopyTo(Array array, long index)
     {
-        if (_index > int.MaxValue || _index < int.MinValue)
-        {
-            throw new ArgumentOutOfRangeException("index", "Arrays larger than 2GB are not supported.");
-        }
-        this.CopyTo(_array, (int)_index);
+        if (index > int.MaxValue || index < int.MinValue)
+            throw new ArgumentOutOfRangeException(nameof(index), "Arrays larger than 2GB are not supported.");
+        this.CopyTo(array, (int)index);
     }
 
-    bool ICollection<T>.Remove(T _item)
+    /// <summary>
+    /// Removes the first occurrence of the specified item from the collection.
+    /// </summary>
+    /// <param name="item">The item to remove.</param>
+    /// <returns>True if the item was removed, otherwise false.</returns>
+    bool ICollection<T>.Remove(T item)
     {
-        int _index = -1;
+        int index = -1;
         for (int i = 0; i < Length; i++)
         {
             T _arrayItem = this[i];
-            if (AreEqual(_arrayItem, _item))
+            if (AreEqual(_arrayItem, item))
             {
-                _index = i;
+                index = i;
                 break;
             }
         }
 
-        if (_index == -1)
+        if (index == -1)
             return false;
 
-        for (int i = _index; i < MaxIndex; i++)
+        for (int i = index; i < MaxIndex; i++)
         {
             this[i] = this[i + 1];
         }
-        Shrink(1);
 
+        Shrink(1);
         return true;
     }
 
-    void IList<T>.RemoveAt(int _index)
+    /// <summary>
+    /// Removes the item at the specified index.
+    /// </summary>
+    /// <param name="index">The index to remove the item from.</param>
+    void IList<T>.RemoveAt(int index)
     {
-        (this as IList).RemoveAt(_index);
+        (this as IList).RemoveAt(index);
     }
 
-    void IList.Remove(object? _value)
+    /// <summary>
+    /// Removes the specified item from the collection.
+    /// </summary>
+    /// <param name="value">The item to remove.</param>
+    void IList.Remove(object? value)
     {
-        int _itemIndex = (this as IList).IndexOf(_value);
-        if (_itemIndex == -1)
+        int itemIndex = (this as IList).IndexOf(value);
+        if (itemIndex == -1)
             throw new ArgumentException("Array doesn't contain value.");
 
-        (this as IList).RemoveAt(_itemIndex);
+        (this as IList).RemoveAt(itemIndex);
     }
 
-    void IList.RemoveAt(int _index)
+    /// <summary>
+    /// Removes the item at the specified index.
+    /// </summary>
+    /// <param name="index">The index to remove the item from.</param>
+    void IList.RemoveAt(int index)
     {
-        if (_index <= -1 || _index > MaxIndex)
+        if (index < 0 || index > MaxIndex)
             throw new IndexOutOfRangeException();
 
-        for (int i = _index; i < MaxIndex; i++)
+        for (int i = index; i < MaxIndex; i++)
         {
             this[i] = this[i + 1];
         }
+
         Shrink(1);
     }
 
-    int IList<T>.IndexOf(T _item)
+    /// <summary>
+    /// Finds the index of the specified item.
+    /// </summary>
+    /// <param name="item">The item to search for.</param>
+    /// <returns>The index of the item if found, otherwise -1.</returns>
+    int IList<T>.IndexOf(T item)
     {
-        return (this as IList).IndexOf(_item);
+        return (this as IList).IndexOf(item);
     }
 
-    void IList<T>.Insert(int _index, T _item)
+    /// <summary>
+    /// Inserts an item at the specified index.
+    /// </summary>
+    /// <param name="index">The index to insert the item at.</param>
+    /// <param name="item">The item to insert.</param>
+    void IList<T>.Insert(int index, T item)
     {
-        (this as IList).Insert(_index, _item);
+        (this as IList).Insert(index, item);
     }
 
-    int IList.Add(object? _value)
+    /// <summary>
+    /// Adds an item to the collection.
+    /// </summary>
+    /// <param name="value">The item to add.</param>
+    /// <returns>The index where the item was added.</returns>
+    int IList.Add(object? value)
     {
         if (array == null)
         {
-            throw new NullReferenceException("array is null, Index to insert item is -1");
-            return -1; // this doesn't give any meaning but IList.Add made to return -1 when adding new item fails.
+            throw new NullReferenceException("Array is null, cannot insert item.");
+            return -1;
         }
 
-        Add((T)_value);
+        Add((T)value);
         return MaxIndex;
     }
 
+    /// <summary>
+    /// Clears the collection.
+    /// </summary>
     void IList.Clear()
     {
         Resize(0);
     }
 
-    bool IList.Contains(object? _value)
+    /// <summary>
+    /// Checks if the collection contains a specific item.
+    /// </summary>
+    /// <param name="value">The item to check.</param>
+    /// <returns>True if the item is found, otherwise false.</returns>
+    bool IList.Contains(object? value)
     {
-        return Contains(_value, out _);
+        return Contains(value, out _);
     }
 
-    int IList.IndexOf(object? _item)
+    /// <summary>
+    /// Finds the index of the specified item.
+    /// </summary>
+    /// <param name="item">The item to search for.</param>
+    /// <returns>The index of the item if found, otherwise -1.</returns>
+    int IList.IndexOf(object? item)
     {
-        int _index = -1;
+        int index = -1;
         for (int i = 0; i < Length; i++)
         {
-            var _arrayItem = this[i];
-            if (AreEqual(_arrayItem, _item))
+            var arrayItem = this[i];
+            if (AreEqual(arrayItem, item))
             {
-                _index = i;
+                index = i;
                 break;
             }
         }
-        return _index;
+        return index;
     }
-
-    void IList.Insert(int _index, object? _value)
+    void IList.Insert(int index, object? value)
     {
-        if (_index < 0 || _index >= Length)
+        if (index < 0 || index >= Length)
             throw new ArgumentOutOfRangeException("index");
 
         Resize(Length + 1);
 
-        for (int i = MaxIndex; i > _index; i--)
+        for (int i = MaxIndex; i > index; i--)
         {
             this[i] = this[i - 1];
         }
 
-        this[_index] = (T)_value;
+        this[index] = (T)value;
     }
 
-    int IStructuralComparable.CompareTo(object? _other, IComparer _comparer)
+    int IStructuralComparable.CompareTo(object? other, IComparer comparer)
     {
-        if (_other == null)
+        if (other == null)
             return 1;
 
-        RLJArray<T> _array = _other as RLJArray<T>;
-        if (_array == null || this.Length != _array.Length)
+        RLJArray<T> array = other as RLJArray<T>;
+        if (array == null || this.Length != array.Length)
         {
-            throw new ArgumentException("Can't compare two arrays with different lengthes.");
+            throw new ArgumentException("Can't compare two arrays with different lengths.");
         }
 
-        int _index = 0;
-        ComparisonState _state = 0;
-        while (_index < _array.Length && _state == ComparisonState.Equal)
+        int index = 0;
+        ComparisonState state = ComparisonState.Equal;
+        while (index < array.Length && state == ComparisonState.Equal)
         {
-            _state = (ComparisonState)_comparer.Compare(this[_index], _array[_index]);
-            _index++;
+            state = (ComparisonState)comparer.Compare(this[index], array[index]);
+            index++;
         }
 
-        return (int)_state;
+        return (int)state;
     }
 
-    bool IStructuralEquatable.Equals(object? _other, IEqualityComparer _comparer)
+    bool IStructuralEquatable.Equals(object? other, IEqualityComparer comparer)
     {
-        if (_other == null)
+        if (other == null)
             return false;
 
-        RLJArray<T> _otherArray = _other as RLJArray<T>;
-        if (this.Length != _otherArray.Length)
+        RLJArray<T> otherArray = other as RLJArray<T>;
+        if (this.Length != otherArray.Length)
             return false;
 
-
-        int _index = 0;
-        while (_index < Length)
+        int index = 0;
+        while (index < Length)
         {
-            if (!_comparer.Equals(this[_index], _otherArray[_index]))
+            if (!comparer.Equals(this[index], otherArray[index]))
                 return false;
-            _index++;
+            index++;
         }
 
         return true;
     }
 
-    int IStructuralEquatable.GetHashCode(IEqualityComparer _comparer)
+    int IStructuralEquatable.GetHashCode(IEqualityComparer comparer)
     {
         return this.GetHashCode();
     }
@@ -671,20 +773,20 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
     /// Return new object of type <see cref="RLJArray{T}"/> with same data and size of this instance.
     /// </summary>
     /// <remarks>
-    /// <b>Note:</b> Method return an object of type <see cref="RLJArray{T}"/>
+    /// <b>Note:</b> Method returns an object of type <see cref="RLJArray{T}"/>
     /// </remarks>
     /// <returns>
-    /// An object of type <see cref="Type1"/>.
+    /// An object of type <see cref="RLJArray{T}"/>.
     /// </returns>
     public object Clone()
     {
-        RLJArray<T> _array = new RLJArray<T>(Length, SegmentLength);
+        RLJArray<T> array = new RLJArray<T>(Length, SegmentLength);
         for (int i = 0; i < Length; i++)
         {
-            _array[i] = this[i];
+            array[i] = this[i];
         }
 
-        return _array;
+        return array;
     }
 
     /// <summary>
@@ -716,94 +818,94 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
         throw new NotSupportedException(Constants.RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY);
     }
 
-    public object GetValue(long _index1, long _index2, long _index3)
+    public object GetValue(long index1, long index2, long index3)
     {
         throw new NotSupportedException(Constants.RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY);
     }
 
-    public object GetValue(params long[] _indices)
+    public object GetValue(params long[] indices)
     {
-        if (_indices == null)
+        if (indices == null)
         {
             throw new ArgumentNullException("indices");
         }
-        if (_indices.Length != this.Rank)
+        if (indices.Length != this.Rank)
         {
             throw new ArgumentException("Indices length does not match the array rank.");
         }
 
-        return this[(int)_indices[0]];
+        return this[(int)indices[0]];
     }
 
-    public void SetValue(object _value, long _index)
+    public void SetValue(object value, long index)
     {
-        if (_index > int.MaxValue || _index < int.MinValue)
+        if (index > int.MaxValue || index < int.MinValue)
         {
             throw new ArgumentOutOfRangeException("index", "Arrays larger than 2GB are not supported.");
         }
 
-        this.SetValue(_value, (int)_index);
+        this.SetValue(value, (int)index);
     }
 
-    public void SetValue(object _value, long _index1, long _index2)
+    public void SetValue(object value, long index1, long index2)
     {
         throw new NotSupportedException(Constants.RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY);
     }
 
-    public void SetValue(object _value, long _index1, long _index2, long _index3)
+    public void SetValue(object value, long index1, long index2, long index3)
     {
         throw new NotSupportedException(Constants.RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY);
     }
 
-    public void SetValue(object _value, params long[] _indices)
+    public void SetValue(object value, params long[] indices)
     {
-        if (_indices == null)
+        if (indices == null)
         {
             throw new ArgumentNullException("indices");
         }
-        if (_indices.Length != this.Rank)
+        if (indices.Length != this.Rank)
         {
             throw new ArgumentException("Indices length does not match the array rank.");
         }
 
-        this[(int)_indices[0]] = (T) _value;
+        this[(int)indices[0]] = (T)value;
     }
 
-    public object GetValue(int _index)
+    public object GetValue(int index)
     {
-        return this[_index];
+        return this[index];
     }
 
-    public object GetValue(int _index1, int _index2)
-    {
-        throw new NotSupportedException(Constants.RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY);
-    }
-
-    public object GetValue(int _index1, int _index2, int _index3)
+    public object GetValue(int index1, int index2)
     {
         throw new NotSupportedException(Constants.RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY);
     }
 
-    public void SetValue(object _value, int _index)
-    {
-        this[_index] = (T) _value;
-    }
-
-    public void SetValue(object _value, int _index1, int _index2)
+    public object GetValue(int index1, int index2, int index3)
     {
         throw new NotSupportedException(Constants.RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY);
     }
 
-    public void SetValue(object _value, int _index1, int _index2, int _index3)
+    public void SetValue(object value, int index)
+    {
+        this[index] = (T)value;
+    }
+
+    public void SetValue(object value, int index1, int index2)
+    {
+        throw new NotSupportedException(Constants.RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY);
+    }
+
+    public void SetValue(object value, int index1, int index2, int index3)
     {
         throw new NotSupportedException(Constants.RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY);
     }
 
     private class Constants
     {
-        private Constants () { }
+        private Constants() { }
 
-        public const string RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY = "RLJArray is just single-dimensional array.";
+        public const string RLJARRAY_IS_SINGLE_DIMENSIONAL_ARRAY = "RLJArray is just a single-dimensional array.";
         public const string ARRAY_2GB_IS_NOT_SUPPORTED = "Arrays larger than 2GB are not supported.";
     }
 }
