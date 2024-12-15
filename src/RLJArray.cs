@@ -529,15 +529,15 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
     /// <param name="item1">The first object.</param>
     /// <param name="item2">The second object.</param>
     /// <returns>True if the objects are equal, otherwise false.</returns>
-    private bool AreEqual(object? _item1, object? _item2)
+    private bool AreEqual(object? item1, object? item2)
     {
         bool res = false;
-        if (_item1 == null && _item2 == null)
+        if (item1 == null && item2 == null)
             res = true;
-        else if (_item1 == null || _item2 == null)
+        else if (item1 == null || item2 == null)
             res = false;
         else
-            res = _item1.Equals(_item2);
+            res = item1.Equals(item2);
         return res;
     }
 
@@ -639,8 +639,8 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
         int index = -1;
         for (int i = 0; i < Length; i++)
         {
-            T _arrayItem = this[i];
-            if (AreEqual(_arrayItem, item))
+            T arrayItem = this[i];
+            if (AreEqual(arrayItem, item))
             {
                 index = i;
                 break;
