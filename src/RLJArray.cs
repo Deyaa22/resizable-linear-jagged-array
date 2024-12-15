@@ -27,7 +27,7 @@ namespace Deyaa.Collections.Generics;
 
 public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollection, IList<T>, IList, IStructuralComparable, IStructuralEquatable, ICloneable
 {
-    private T[][] array;
+    private T[][] _array;
 
     public readonly int Rank = 1;
 
@@ -36,7 +36,7 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
     /// <summary>
     /// Gets the total number of segments used in the array.
     /// </summary>
-    public int TotalNumberOfSegments { get { return array.Length; } }
+    public int TotalNumberOfSegments { get { return _array.Length; } }
     /// <summary>
     /// Gets the number of segments that are null in memory.
     /// </summary>
@@ -49,7 +49,7 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
         {
             int counter = 0;
             for (int i = 0; i < TotalNumberOfSegments; i++)
-                if (array[i] == null)
+                if (_array[i] == null)
                     counter++;
             return counter;
         }
@@ -68,9 +68,9 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
             int counter = 0;
             for (int i = 0; i < TotalNumberOfSegments; i++)
             {
-                for (int j = 0; array[i] != null && j < array[i].Length; j++)
+                for (int j = 0; _array[i] != null && j < _array[i].Length; j++)
                 {
-                    if (!EqualsDefault(array[i][j]))
+                    if (!EqualsDefault(_array[i][j]))
                         break;
 
                     if (j == SegmentLength - 1)
@@ -81,10 +81,10 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
         }
     }
 
-    private int length = 0;
+    private int _length = 0;
     public int Length
     {
-        get { return length; }
+        get { return _length; }
         private set
         {
             int newLength = value;
@@ -97,7 +97,7 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
 
             if (newLength == 0)
             {
-                array = new T[0][];
+                _array = new T[0][];
             }
             else
             {
@@ -107,9 +107,9 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
                     T[][] newArray = new T[newNumberOfSegments][];
                     for (int segmentIndex = 0; segmentIndex < newNumberOfSegments && segmentIndex < TotalNumberOfSegments; segmentIndex++)
                     {
-                        newArray[segmentIndex] = array[segmentIndex];
+                        newArray[segmentIndex] = _array[segmentIndex];
                     }
-                    array = newArray;
+                    _array = newArray;
                 }
 
                 if (newLength < Length)
@@ -117,9 +117,9 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
                     int segmentIndex = CalculateSegmentIndex(newLength - 1);
                     int itemIndex = CalculateItemIndexAtSegment(newLength - 1);
                     T[] segment = null;
-                    if (array[segmentIndex] != null)
+                    if (_array[segmentIndex] != null)
                     {
-                        segment = array[segmentIndex];
+                        segment = _array[segmentIndex];
 
                         for (int i = itemIndex + 1; i < SegmentLength; i++)
                         {
@@ -129,7 +129,7 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
                 }
             }
 
-            length = newLength;
+            _length = newLength;
         }
     }
 
@@ -191,7 +191,7 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
 
         SegmentLength = segmentLength;
         int numberOfSegment = CalculateNumberOfSegments(length);
-        array = new T[numberOfSegment][];
+        _array = new T[numberOfSegment][];
         Resize(length);
     }
 
@@ -207,8 +207,8 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
             int segmentIndex = CalculateSegmentIndex(index);
             int itemIndexAtSegment = CalculateItemIndexAtSegment(index);
 
-            if (array[segmentIndex] != null)
-                item = array[segmentIndex][itemIndexAtSegment];
+            if (_array[segmentIndex] != null)
+                item = _array[segmentIndex][itemIndexAtSegment];
 
             return item;
         }
@@ -220,15 +220,15 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
             int segmentIndex = CalculateSegmentIndex(index);
             int itemIndexAtSegment = CalculateItemIndexAtSegment(index);
 
-            if (array[segmentIndex] == null)
+            if (_array[segmentIndex] == null)
             {
                 if (EqualsDefault(value))
                     return;
                 else
-                    array[segmentIndex] = new T[SegmentLength];
+                    _array[segmentIndex] = new T[SegmentLength];
             }
 
-            array[segmentIndex][itemIndexAtSegment] = value;
+            _array[segmentIndex][itemIndexAtSegment] = value;
         }
     }
 
@@ -355,7 +355,7 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
 
         for (int i = startSegmentIndex; i <= endSegmentIndex; i++)
         {
-            T[] segment = array[i];
+            T[] segment = _array[i];
             if (segment == null)
                 continue;
 
@@ -370,7 +370,7 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
             }
 
             if (segmentIsEmpty)
-                array[i] = null;
+                _array[i] = null;
         }
     }
     /// <summary>
@@ -660,7 +660,7 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
     /// <returns>The index where the item was added.</returns>
     int IList.Add(object? value)
     {
-        if (array == null)
+        if (_array == null)
         {
             throw new NullReferenceException("Array is null, cannot insert item.");
             return -1;
