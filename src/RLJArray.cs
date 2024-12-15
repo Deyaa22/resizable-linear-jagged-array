@@ -872,7 +872,7 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
     {
         if (index > int.MaxValue || index < int.MinValue)
         {
-            throw new ArgumentOutOfRangeException("index", "Arrays larger than 2GB are not supported.");
+            throw new ArgumentOutOfRangeException(nameof(index), Constants.ARRAY_2GB_IS_NOT_SUPPORTED);
         }
 
         return this.GetValue((int)index);
@@ -906,7 +906,7 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
     {
         if (index > int.MaxValue || index < int.MinValue)
         {
-            throw new ArgumentOutOfRangeException("index", "Arrays larger than 2GB are not supported.");
+            throw new ArgumentOutOfRangeException(nameof(index), Constants.ARRAY_2GB_IS_NOT_SUPPORTED);
         }
 
         this.SetValue(value, (int)index);
