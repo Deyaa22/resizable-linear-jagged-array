@@ -1,5 +1,5 @@
-# ResizableLinearJaggedArray - RLJArray
-`ResizableLinearJaggedArray<T>` is a generic, resizable linear array with an internal jagged array structure, designed to provide Big-Oh(1) time complexity for item access as it is with the normal array.
+# RLJArray - RLJArray
+`RLJArray<T>` is a generic, resizable linear array with an internal jagged array structure, designed to provide Big-Oh(1) time complexity for item access as it is with the normal array.
 This class allows efficient resizing by managing segments, which are fixed-length sub-arrays, and avoids the allocation of space for empty segments.
 
 ## CAUTION:
@@ -7,13 +7,13 @@ Package is fresh-made, So,
 Tests so far gives the advantages of array and list over RLJArray in most cases, SO keep looking here for new updates.
 
 ## Installation
-To install the `ResizableLinearJaggedArray` package, use the following command in the NuGet Package Manager Console:
+To install the `RLJArray` package, use the following command in the NuGet Package Manager Console:
 
 ```bash
-dotnet add package Deyaa.ExDS.ResizableLinearJaggedArray --version 0.1.2
+dotnet add package Deyaa.ExDS.RLJArray --version 0.1.2
 ```
 
-Alternatively, you can add the package via the [NuGet Gallery](https://www.nuget.org/packages/Deyaa.ExDS.ResizableLinearJaggedArray) or your preferred package manager.
+Alternatively, you can add the package via the [NuGet Gallery](https://www.nuget.org/packages/Deyaa.ExDS.RLJArray) or your preferred package manager.
 
 ## How It Works
 Unlike standard C# `Array` or `List<T>`, `RLJArray` is divided into segments that represent contiguous items.
@@ -22,22 +22,22 @@ Saving memory by not reserving space for empty segments.
 The array can be resized dynamically, with the ability to enlarge and shrink in bulk, without the overhead of moving items to new array.
 
 ## Usage
-Here's a simple example of how to use `ResizableLinearJaggedArray<T>`:
+Here's a simple example of how to use `RLJArray<T>`:
 ```csharp
-using Deyaa.ExtensibleDataStructures.Generics;
-var array = new ResizableLinearJaggedArray<int>(_length: _10, _segmentLength: _5); // Initialize with length 10 and segment length 5
+using Deyaa.Collections.Generics;
+var array = new RLJArray<int>(length: 10, segmentLength: 5); // Initialize with length 10 and segment length 5
 array[0] = 1;
-array.Add(_item: _2);
-array.Enlarge(_amount: _5);
-array.Shrink(_amount: _3);
+array.Add(item: 2);
+array.Enlarge(amount: 5);
+array.Shrink(amount: 3);
 ```
 
 ## Key Features
 - **Array-Like:** RLJArray acts the same as normal linear array, Just replace array instance with RLJArray, All operation within linear array can be done in the same way using `RLJArray` 
 ```csharp
 // Collection initializer
-var cSArray =                             new int[] { 0, 1, 2, 3, 4, 5, 6, 7 };
-var rLArray = new ResizableLinearJaggedArray<int>() { 0, 1, 2, 3, 4, 5, 6, 7 };
+var cSArray =           new int[] { 0, 1, 2, 3, 4, 5, 6, 7 };
+var rLArray = new RLJArray<int>() { 0, 1, 2, 3, 4, 5, 6, 7 };
 
 // Assigning values using indexer 
 cSArray[0] = 1; // { 1, 1, 2, 3, 4, 5, 6, 7 }
@@ -52,13 +52,13 @@ x = cSArray.Length; // 8
 y = rLArray.Length; // 8
 
 // Enumerating within foreach statement
-foreach(var _item in cSArray)
+foreach(var item in cSArray)
 {
-    Console.WriteLine($"{_item} - "); // 1 - 1 - 2 - 3 - 4 - 5 - 6 - 7 -
+    Console.WriteLine($"{item} - "); // 1 - 1 - 2 - 3 - 4 - 5 - 6 - 7 -
 }
-foreach(var _item in rLArray)
+foreach(var item in rLArray)
 {
-    Console.WriteLine($"{_item} - "); // 1 - 1 - 2 - 3 - 4 - 5 - 6 - 7 -
+    Console.WriteLine($"{item} - "); // 1 - 1 - 2 - 3 - 4 - 5 - 6 - 7 -
 }
 
 // Throwing exceptions as it is in linear [single-dimensional] array
@@ -68,7 +68,7 @@ rLArray[8] = y; // throws IndexOutOfRangeException
 // Initializing array of parameterless constructor value types 
 struct X { public int x = 0; public X() { x = 5; } }
 var cSArray2 =                             new X[1];
-var rLArray2 = new ResizableLinearJaggedArray<X>(1);
+var rLArray2 = new RLJArray<X>(1);
 Console.WriteLine(csArray2[0]) // 0
 Console.WriteLine(rLArray2[0]) // 0
 cSArray2.Initialize();
@@ -79,13 +79,13 @@ Console.WriteLine(rLArray2[0]) // 5
 - **Efficient Resizing:** Supports bulk resizing operations without relocating items at all.
 ```csharp
 // rLArray:                       { 1, 1, 2, 3, 4, 5, 6, 7 }
-rLArray.Shrink(_amount: 4);    // { 1, 1, 2, 3 }
-rLArray.Enlarge(_amount: 8);   // { 1, 1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0 }
-rLArray.Resize(_newLength: 2); // { 1, 1 }
+rLArray.Shrink(amount: 4);    // { 1, 1, 2, 3 }
+rLArray.Enlarge(amount: 8);   // { 1, 1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0 }
+rLArray.Resize(newLength: 2); // { 1, 1 }
 ```
 - **Memory Efficiency:** Avoids allocation for empty segments and can free memory by cleaning empty segments.
 ```csharp
-rLArray.Resize(_newLength: 24); // { 1, 1, 0, ...., 0 }
+rLArray.Resize(newLength: 24); // { 1, 1, 0, ...., 0 }
 Console.WriteLine(rLArray.NumberOfNullSegments); // 2
 // 2 segments are null,
 // which means saving (56) bytes = 4 bytes [int32] * 2 segments * 8 [default segment length] - 8 bytes [segment reference address in 64-bit systems, [4 bytes for 32-bit]]
@@ -97,16 +97,16 @@ Console.WriteLine(rLArray.NumberOfNullSegments); // 2
 - **Flexible Segment Length:** Allows customization of segment size for optimized performance based on use case.
 ```csharp
 // Segment Length = 8 by default
-var array1 = new ResizableLinearJaggedArray<int>(_length: 16);
-var array2 = new ResizableLinearJaggedArray<int>(_length: 16, _segmentLength: 16);
+var array1 = new RLJArray<int>(length: 16);
+var array2 = new RLJArray<int>(length: 16, segmentLength: 16);
 ```
 
 ## Comparison with `List<T>`
 **From a Usage Perspective:**
-- `ResizableLinearJaggedArray<T>` allows for bulk resizing and does not require moving items to a new array, which can be more efficient than `List<T>` for certain use cases.
+- `RLJArray<T>` allows for bulk resizing and does not require moving items to a new array, which can be more efficient than `List<T>` for certain use cases.
 
 **From an Implementation Perspective:**
-- `ResizableLinearJaggedArray<T>` avoids the need for reallocation and copying of elements when resizing, unlike `List<T>`, which doubles its capacity and moves elements when the internal array reaches full capacity. `List<T>` does not reduce the internal array size when elements are removed, leading to potential memory wastage.
+- `RLJArray<T>` avoids the need for reallocation and copying of elements when resizing, unlike `List<T>`, which doubles its capacity and moves elements when the internal array reaches full capacity. `List<T>` does not reduce the internal array size when elements are removed, leading to potential memory wastage.
 - Note: Theoritically RLJArray gives more advantages over `List<T>`, But internally, optimization techniques could be done by CLR team in .Net and Kernel team in OS, Which can make the difference, This doesn't mean `List<T>` wins nor RLJArray. But RLJArray practically performence test.
 
 ## Segment Length Considerations
@@ -143,7 +143,7 @@ Look at [CONTRIBUTING.md](CONTRIBUTING.md),
 And Feel free to create issue, test and contribute.
  
 ## Conclusion
-`ResizableLinearJaggedArray<T>` offers features beyond those provided by `List<T>`, such as efficient bulk resizing and memory management without reallocating or moving items. However, `List<T>` may still be preferable in scenarios where performance optimizations are handled by the .NET runtime and for applications where `List<T>`'s built-in methods are sufficient. Extensive testing is recommended to evaluate performance and suitability for specific scenarios.
+`RLJArray<T>` offers features beyond those provided by `List<T>`, such as efficient bulk resizing and memory management without reallocating or moving items. However, `List<T>` may still be preferable in scenarios where performance optimizations are handled by the .NET runtime and for applications where `List<T>`'s built-in methods are sufficient. Extensive testing is recommended to evaluate performance and suitability for specific scenarios.
 
 ## Disclaimer
  You are solely responsible for any damages resulting from your use of this package in any product, including logical errors and failures resulting from errors in the source code.
