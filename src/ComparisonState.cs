@@ -1,4 +1,6 @@
-﻿public enum ComparisonState : short
+﻿namespace Deyaa;
+
+public enum ComparisonState : short
 {
     Precedent = -1,
     Equal = 0,
