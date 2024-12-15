@@ -1,4 +1,4 @@
-# RLJArray - RLJArray
+# Resizable Linear Jagged Array - RLJArray<T>
 `RLJArray<T>` is a generic, resizable linear array with an internal jagged array structure, designed to provide Big-Oh(1) time complexity for item access as it is with the normal array.
 This class allows efficient resizing by managing segments, which are fixed-length sub-arrays, and avoids the allocation of space for empty segments.
 
@@ -10,10 +10,10 @@ Tests so far gives the advantages of array and list over RLJArray in most cases,
 To install the `RLJArray` package, use the following command in the NuGet Package Manager Console:
 
 ```bash
-dotnet add package Deyaa.ExDS.RLJArray --version 0.1.2
+dotnet add package Deyaa.Collections.Generics.RLJArray --version 0.1.0
 ```
 
-Alternatively, you can add the package via the [NuGet Gallery](https://www.nuget.org/packages/Deyaa.ExDS.RLJArray) or your preferred package manager.
+Alternatively, you can add the package via the [NuGet Gallery](https://www.nuget.org/packages/Deyaa.Collections.Generics.RLJArray) or your preferred package manager.
 
 ## How It Works
 Unlike standard C# `Array` or `List<T>`, `RLJArray` is divided into segments that represent contiguous items.
