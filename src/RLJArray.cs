@@ -375,6 +375,7 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
                 _array[i] = null;
         }
     }
+
     /// <summary>
     /// Calculates the number of segments required to hold a given number of items.
     /// </summary>
@@ -382,11 +383,20 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
     /// <returns>The number of segments needed.</returns>
     private int CalculateNumberOfSegments(int length)
     {
+        return CalculateNumberOfSegments(length, SegmentLength);
+    }
+    /// <summary>
+    /// Calculates the number of segments required to hold a given number of items.
+    /// </summary>
+    /// <param name="length">The total number of items to be held in segments.</param>
+    /// <returns>The number of segments needed.</returns>
+    public static int CalculateNumberOfSegments(int length, int segmentLength)
+    {
         if (length == 0)
             return 0;
 
         int maxIndex = length - 1;
-        int maxSegmentIndex = CalculateSegmentIndex(maxIndex);
+        int maxSegmentIndex = CalculateSegmentIndex(maxIndex, segmentLength);
         return maxSegmentIndex + 1;
     }
 
@@ -396,7 +406,16 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
     /// <param name="index">The index to be contained in a segment.</param>
     private int CalculateSegmentIndex(int index)
     {
-        return index / SegmentLength;
+        return CalculateSegmentIndex(index, SegmentLength);
+    }
+
+    /// <summary>
+    /// Calculates the index of the segment that holds the given index.
+    /// </summary>
+    /// <param name="index">The index to be contained in a segment.</param>
+    public static int CalculateSegmentIndex(int index, int segmentLength)
+    {
+        return index / segmentLength;
     }
 
     /// <summary>
@@ -405,7 +424,15 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
     /// <param name="index">The index in the array.</param>
     private int CalculateItemIndexAtSegment(int index)
     {
-        return index % SegmentLength;
+        return CalculateNumberOfSegments(index, SegmentLength);
+    }
+    /// <summary>
+    /// Calculates the index within the segment using the given item index.
+    /// </summary>
+    /// <param name="index">The index in the array.</param>
+    public static int CalculateItemIndexAtSegment(int index, int segmentLength)
+    {
+        return index % segmentLength;
     }
 
     /// <summary>
@@ -415,7 +442,16 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
     /// <returns>True if the index is the first index in a segment, otherwise false.</returns>
     public bool IsFirstIndexInSegment(int index)
     {
-        return index % SegmentLength == 0;
+        return IsFirstIndexInSegment(index, SegmentLength);
+    }
+    /// <summary>
+    /// Determines whether the given index is the first index in a segment.
+    /// </summary>
+    /// <param name="index">The index to check.</param>
+    /// <returns>True if the index is the first index in a segment, otherwise false.</returns>
+    public static bool IsFirstIndexInSegment(int index, int segmentLength)
+    {
+        return index % segmentLength == 0;
     }
 
     /// <summary>
@@ -425,7 +461,16 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
     /// <returns>True if the index is the last index in a segment, otherwise false.</returns>
     public bool IsLastIndexInSegment(int index)
     {
-        return index % SegmentLength == SegmentLength - 1;
+        return IsLastIndexInSegment(index, SegmentLength);
+    }
+    /// <summary>
+    /// Determines whether the given index is the last index in a segment.
+    /// </summary>
+    /// <param name="index">The index to check.</param>
+    /// <returns>True if the index is the last index in a segment, otherwise false.</returns>
+    public static bool IsLastIndexInSegment(int index, int segmentLength)
+    {
+        return index % segmentLength == segmentLength - 1;
     }
 
     /// <summary>
@@ -433,10 +478,19 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
     /// </summary>
     /// <param name="index">The current index.</param>
     /// <returns>The first index of the next segment.</returns>
-    public int GetFirstIndexOfNextSegment(int index)
+    private int GetFirstIndexOfNextSegment(int index)
+    {
+        return GetFirstIndexOfNextSegment(index, SegmentLength);
+    }
+    /// <summary>
+    /// Returns the first index of the next segment.
+    /// </summary>
+    /// <param name="index">The current index.</param>
+    /// <returns>The first index of the next segment.</returns>
+    public static int GetFirstIndexOfNextSegment(int index, int segmentLength)
     {
         int length = index + 1;
-        return CalculateNumberOfSegments(length) * SegmentLength;
+        return CalculateNumberOfSegments(length, segmentLength) * segmentLength;
     }
 
     /// <summary>
@@ -444,10 +498,19 @@ public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollect
     /// </summary>
     /// <param name="index">The current index.</param>
     /// <returns>The last index of the previous segment.</returns>
-    public int GetLastIndexOfPreviousSegment(int index)
+    private int GetLastIndexOfPreviousSegment(int index)
+    {
+        return GetLastIndexOfPreviousSegment(index, SegmentLength);
+    }
+    /// <summary>
+    /// Returns the last index of the previous segment.
+    /// </summary>
+    /// <param name="index">The current index.</param>
+    /// <returns>The last index of the previous segment.</returns>
+    public static int GetLastIndexOfPreviousSegment(int index, int segmentLength)
     {
         int length = index + 1;
-        return ((CalculateNumberOfSegments(length) - 1) * SegmentLength) - 1;
+        return ((CalculateNumberOfSegments(length, segmentLength) - 1) * segmentLength) - 1;
     }
 
     /// <summary>
