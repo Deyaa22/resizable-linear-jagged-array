@@ -21,7 +21,7 @@ namespace Deyaa.Collections.Generics;
 /// Accessing elements returns the default value; if the segment is null,
 /// This approach conserves memory by avoiding the allocation of space of sub array for empty segments.
 /// 
-/// User can get benefit of manually freeing space of memory of segments which get empty by calling the [CleanEmptySegments()] method.
+/// User can get benefit of manually freeing space of memory of segments which get empty by calling the 'CleanEmptySegments()' method.
 /// </summary>
 /// <typeparam name="T"></typeparam>
 
