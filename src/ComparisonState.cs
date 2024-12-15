@@ -1,6 +1,6 @@
 ﻿namespace Deyaa;
 
-public enum ComparisonState : short
+public enum ComparisonState
 {
     Precedent = -1,
     Equal = 0,
