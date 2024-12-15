@@ -25,7 +25,7 @@ namespace Deyaa.Collections.Generics;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 
-public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollection, IList<T>, IList, IStructuralComparable, IStructuralEquatable, ICloneable
+public class RLJArray<T> : IEnumerable<T>, IEnumerable, ICollection<T>, ICollection, IList<T>, IList, IStructuralComparable, IStructuralEquatable, ICloneable
 {
     private T[][] array;
 
@@ -176,7 +176,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
 
     public object SyncRoot { get { return this; } }
 
-    public ResizableLinearJaggedArray(int _length = 0, int _segmentLength = 8)
+    public RLJArray(int _length = 0, int _segmentLength = 8)
     {
         if (_length < 0)
             throw new ArgumentOutOfRangeException("Length of array can't be less than zero.");
@@ -489,7 +489,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         CopyTo((Array) _array, _arrayIndex);
     }
 
-    public void CopyTo(ResizableLinearJaggedArray<T> _array, int _arrayIndex)
+    public void CopyTo(RLJArray<T> _array, int _arrayIndex)
     {
         for (int i = _arrayIndex; i < _array.Length && i < Length; i++)
         {
@@ -624,7 +624,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         if (_other == null)
             return 1;
 
-        ResizableLinearJaggedArray<T> _array = _other as ResizableLinearJaggedArray<T>;
+        RLJArray<T> _array = _other as RLJArray<T>;
         if (_array == null || this.Length != _array.Length)
         {
             throw new ArgumentException("Can't compare two arrays with different lengthes.");
@@ -646,7 +646,7 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
         if (_other == null)
             return false;
 
-        ResizableLinearJaggedArray<T> _otherArray = _other as ResizableLinearJaggedArray<T>;
+        RLJArray<T> _otherArray = _other as RLJArray<T>;
         if (this.Length != _otherArray.Length)
             return false;
 
@@ -668,17 +668,17 @@ public class ResizableLinearJaggedArray<T> : IEnumerable<T>, IEnumerable, IColle
     }
 
     /// <summary>
-    /// Return new object of type <see cref="ResizableLinearJaggedArray{T}"/> with same data and size of this instance.
+    /// Return new object of type <see cref="RLJArray{T}"/> with same data and size of this instance.
     /// </summary>
     /// <remarks>
-    /// <b>Note:</b> Method return an object of type <see cref="ResizableLinearJaggedArray{T}"/>
+    /// <b>Note:</b> Method return an object of type <see cref="RLJArray{T}"/>
     /// </remarks>
     /// <returns>
     /// An object of type <see cref="Type1"/>.
     /// </returns>
     public object Clone()
     {
-        ResizableLinearJaggedArray<T> _array = new ResizableLinearJaggedArray<T>(Length, SegmentLength);
+        RLJArray<T> _array = new RLJArray<T>(Length, SegmentLength);
         for (int i = 0; i < Length; i++)
         {
             _array[i] = this[i];
